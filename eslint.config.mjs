@@ -26,4 +26,9 @@ export default [
       'dist',
     ],
   },
+  {
+    rules: {
+      'vue/multi-word-component-names': 'off',
+    },
+  },
 ]

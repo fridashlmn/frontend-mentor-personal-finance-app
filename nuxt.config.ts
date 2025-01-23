@@ -6,34 +6,28 @@ export default defineNuxtConfig({
 
   devtools: { enabled: true },
 
-  app: {
-    baseURL: '',
-    head: {
-      link: [
-        {
-          rel: 'stylesheet',
-          href: 'https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css',
-        },
-      ],
-      script: [
-        {
-          src: 'https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js',
-          tagPosition: 'bodyClose',
-        },
-      ],
-    },
-  },
-
-  css: ['~/assets/css/main.css'],
+  css: ['~/assets/css/main.scss'],
 
   postcss: {
     plugins: {
-      tailwindcss: {},
       autoprefixer: {},
     },
   },
 
   vite: {
+    css: {
+      preprocessorOptions: {
+        scss: {
+          quietDeps: true,
+          api: 'modern-compiler',
+          silenceDeprecations: ['mixed-decls'],
+        },
+        sass: {
+          quietDeps: true,
+          silenceDeprecations: ['mixed-decls'],
+        },
+      },
+    },
     plugins: [svgLoader()],
     optimizeDeps: {
       include: ['fast-deep-equal'],
