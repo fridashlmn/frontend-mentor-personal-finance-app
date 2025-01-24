@@ -11,7 +11,7 @@
         <li v-for="item in navigationItems" :key="item.label" class="link-item">
           <NuxtLink
             :to="item.link"
-            class="d-flex px-7 pt-4 pb-4 align-items-center text-beige-100 text-decoration-none h-6"
+            class="d-flex px-7 pt-4 pb-4 align-items-center text-beige-100 fw-bold text-decoration-none h-6"
             activeClass="activeClass rounded-end-3 border-start border-5 border-green"
           >
             <component
@@ -37,43 +37,12 @@
 <script setup lang="ts">
 import LogoLarge from '~/assets/images/logo-large.svg?component'
 import LogoSmall from '~/assets/images/logo-small.svg?component'
-import IconOverview from '~/assets/images/icon-nav-overview.svg?component'
-import IconTransactions from '~/assets/images/icon-nav-transactions.svg?component'
-import IconBudgets from '~/assets/images/icon-nav-budgets.svg?component'
-import IconPots from '~/assets/images/icon-nav-pots.svg?component'
-import IconRecurringBills from '~/assets/images/icon-nav-recurring-bills.svg?component'
+
 import IconMinimize from '~/assets/images/icon-minimize-menu.svg?component'
+import { navigationItems } from '~/content/navigation'
 
 // eslint-disable-next-line no-undef
 const isMenuCollapsed = ref<boolean>(false)
-// eslint-disable-next-line no-undef
-const navigationItems = computed(() => [
-  {
-    link: '/',
-    label: 'Overview',
-    icon: IconOverview,
-  },
-  {
-    link: '/transactions',
-    label: 'Transactions',
-    icon: IconTransactions,
-  },
-  {
-    link: '/budgets',
-    label: 'Budgets',
-    icon: IconBudgets,
-  },
-  {
-    link: '/pots',
-    label: 'Pots',
-    icon: IconPots,
-  },
-  {
-    link: '/recurring-bills',
-    label: 'Recurring bills',
-    icon: IconRecurringBills,
-  },
-])
 
 function toggleSidebar(): void {
   const sidebar: Element | null = document.querySelector('.sidebar')
@@ -88,7 +57,8 @@ function toggleSidebar(): void {
 }
 </script>
 <style lang="scss">
-@import 'assets/css/main.scss';
+@import 'assets/css/colors.scss';
+@import 'assets/css/layout.scss';
 body {
   overflow-x: hidden;
 }
