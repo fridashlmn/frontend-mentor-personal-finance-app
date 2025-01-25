@@ -1,10 +1,11 @@
 <template>
   <nav class="container mobileNavBar fixed-bottom bg-grey-900 rounded-top-3">
-    <ul class="nav row g-0 align-items-end h-100">
+    <ul class="nav row g-0 align-items-end justify-content-around h-100">
       <li
         v-for="item in navigationItems"
         :key="item.label"
         class="col link-item"
+        style="max-width: 6.5rem"
       >
         <NuxtLink
           :to="item.link"
@@ -29,7 +30,7 @@
 import { navigationItems } from '~/content/navigation'
 </script>
 <style lang="scss">
-@import 'assets/css/layout.scss';
+@import 'assets/css/variables';
 .mobileNavBar {
   height: $navBar-height-tablet;
 
@@ -46,7 +47,7 @@ import { navigationItems } from '~/content/navigation'
 
 .linkIcon {
   @media screen and (max-width: 530px) {
-    margin-bottom: 10px !important;
+    margin-bottom: 0.625rem !important;
   }
 }
 </style>

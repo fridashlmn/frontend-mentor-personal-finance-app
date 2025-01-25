@@ -1,7 +1,65 @@
 <template>
-  <div>
+  <div class="container overflow-hidden px-8 py-7">
     <h1 class="fw-bold">Overview</h1>
-    <button class="btn btn-primary">share</button>
+    <div class="row gx-6 my-5 my-md-7 gy-3 gy-md-0">
+      <div class="col">
+        <Card
+          title="Current Balance"
+          variant="small"
+          background-color="grey-900"
+          color="white"
+        >
+          <span class="text-white fs-1 fw-bold">
+            {{ toCurrency(data.balance.current) }}
+          </span>
+        </Card>
+      </div>
+      <div class="col">
+        <Card class="fs-1 fw-bold" title="Income" variant="small">
+          <span>{{ toCurrency(data.balance.income) }}</span>
+        </Card>
+      </div>
+      <div class="col">
+        <Card class="fs-1 fw-bold" title="Expenses" variant="small">
+          <span>{{ toCurrency(data.balance.expenses) }}</span>
+        </Card>
+      </div>
+    </div>
+    <div class="row row-cols-2 g-6">
+      <div class="col">
+        <Card title="Pots" link-label="See Details" link-target="/pots">
+          <PotOverview :data="data.pots" />
+        </Card>
+      </div>
+      <div class="col">
+        <Card title="Budgets" link-label="See Details" link-target="/budgets">
+          <p>CONTENT</p>
+        </Card>
+      </div>
+      <div class="col">
+        <Card
+          title="Transactions"
+          link-label="View All"
+          link-target="/transactions"
+        >
+          <p>CONTENT</p>
+        </Card>
+      </div>
+      <div class="col">
+        <Card
+          title="Recurring Bills"
+          link-label="See Details"
+          link-target="/recurring-bills"
+        >
+          <p>CONTENT</p>
+        </Card>
+      </div>
+    </div>
   </div>
 </template>
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import Card from '~/components/layout/Card.vue'
+import { toCurrency } from '~/utils/formatter'
+import data from '~/content/data.json'
+import PotOverview from '~/components/pots/PotOverview.vue'
+</script>

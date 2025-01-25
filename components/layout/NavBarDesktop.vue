@@ -1,6 +1,6 @@
 <template>
   <nav
-    class="col-2-5 sidebar bg-grey-900 min-vh-100 d-flex flex-column justify-content-between align-items-baseline pb-6"
+    class="col-2-5 sidebar rounded-end-4 bg-grey-900 min-vh-100 d-flex flex-column justify-content-between align-items-baseline pb-6"
   >
     <div :class="!isMenuCollapsed ? 'w-100' : ''">
       <div class="pt-8 pb-8 px-7">
@@ -57,8 +57,7 @@ function toggleSidebar(): void {
 }
 </script>
 <style lang="scss">
-@import 'assets/css/colors.scss';
-@import 'assets/css/layout.scss';
+@import 'assets/css/variables';
 body {
   overflow-x: hidden;
 }
@@ -70,7 +69,7 @@ body {
 }
 
 .sidebar.collapsed {
-  width: $sidebar-width-collapsed;
+  width: $sidebar-width-collapsed !important;
 }
 
 .btn-link:hover {
