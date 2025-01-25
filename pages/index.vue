@@ -25,18 +25,18 @@
         </Card>
       </div>
     </div>
-    <div class="row row-cols-2 g-6">
+    <div class="row row-cols-1 row-cols-lg-2 g-6">
       <div class="col">
         <Card title="Pots" link-label="See Details" link-target="/pots">
           <PotOverview :data="data.pots" />
         </Card>
       </div>
-      <div class="col">
+      <div class="col order-2 order-lg-1">
         <Card title="Budgets" link-label="See Details" link-target="/budgets">
           <p>CONTENT</p>
         </Card>
       </div>
-      <div class="col">
+      <div class="col order-1 order-lg-2">
         <Card
           title="Transactions"
           link-label="View All"
@@ -45,7 +45,7 @@
           <p>CONTENT</p>
         </Card>
       </div>
-      <div class="col">
+      <div class="col order-last order-lg-last">
         <Card
           title="Recurring Bills"
           link-label="See Details"
