@@ -12,7 +12,7 @@
     </div>
     <div class="col row row-cols-2 g-0 mt-5 mt-md-0 ms-md-5">
       <div
-        v-for="(item, index) in data.slice(0, 4)"
+        v-for="(item, index) in pots.slice(0, 4)"
         :key="index"
         class="col d-flex firstRowMargin"
       >
@@ -36,23 +36,17 @@
 <script setup lang="ts">
 import { toCurrency } from '~/utils/formatter'
 import IconPot from '~/assets/images/icon-pot.svg?component'
-
-type Pot = {
-  name: string
-  target: number
-  total: number
-  theme: string
-}
+import type { Pot } from '~/pages/index.vue'
 
 interface Props {
-  data: Pot[]
+  pots: Pot[]
 }
 
 const props = defineProps<Props>()
 
 // eslint-disable-next-line no-undef
 const totalAmountSaved = computed(() => {
-  const totalAmount = props.data
+  const totalAmount = props.pots
     .map((pot) => pot.total)
     .reduce((accumulator, currentValue) => {
       return accumulator + currentValue

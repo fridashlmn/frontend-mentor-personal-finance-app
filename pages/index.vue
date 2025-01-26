@@ -1,5 +1,5 @@
 <template>
-  <div class="container overflow-hidden px-8 py-6 py-md-7">
+  <div class="container overflow-hidden px-4 px-md-8 py-6 py-md-7">
     <h1 class="fw-bold">Overview</h1>
     <div class="row gx-6 my-5 my-md-7 gy-3 gy-md-0">
       <div class="col">
@@ -28,7 +28,7 @@
     <div class="row row-cols-1 row-cols-lg-2 g-6">
       <div class="col">
         <Card title="Pots" link-label="See Details" link-target="/pots">
-          <PotOverview :data="data.pots" />
+          <PotOverview :pots="data.pots" />
         </Card>
       </div>
       <div class="col order-2 order-lg-1">
@@ -51,7 +51,7 @@
           link-label="See Details"
           link-target="/recurring-bills"
         >
-          <p>CONTENT</p>
+          <RecurringBillsOverview :transactions="uniqueRecurringBills" />
         </Card>
       </div>
     </div>
@@ -62,4 +62,32 @@ import Card from '~/components/layout/Card.vue'
 import { toCurrency } from '~/utils/formatter'
 import data from '~/content/data.json'
 import PotOverview from '~/components/pots/PotOverview.vue'
+import RecurringBillsOverview from '~/components/recurringBills/RecurringBillsOverview.vue'
+
+export type Pot = {
+  name: string
+  target: number
+  total: number
+  theme: string
+}
+
+export type Transaction = {
+  avatar: string
+  name: number
+  category: number
+  date: string
+  amount: number
+  recurring: boolean
+}
+
+// eslint-disable-next-line no-undef
+const uniqueRecurringBills = computed(() => {
+  const recurringBills = data.transactions.filter(
+    (transaction) => transaction.recurring,
+  )
+  return recurringBills.filter(
+    (value, index, self) =>
+      index === self.findIndex((t) => t.name === value.name),
+  )
+})
 </script>
