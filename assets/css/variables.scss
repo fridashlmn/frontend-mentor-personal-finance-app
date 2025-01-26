@@ -59,6 +59,19 @@ $body-bg: $beige-100;
 $body-bg-rgb: (248, 244, 240);
 $body-color: $grey-900;
 $body-color-rgb: (32, 31, 36);
+$progress-height: 0.5rem;
+$dropdown-bg: $white;
+$dropdown-border-color: $white;
+$dropdown-divider-bg: $grey-100;
+$dropdown-padding-y: 12px;
+$dropdown-padding-x: 20px;
+$dropdown-item-padding-y: 0;
+$dropdown-item-padding-x: 0;
+$dropdown-divider-margin-y: 12px;
+$dropdown-min-width: none;
+$bs-dropdown-link-hover-color: initial;
+$dropdown-link-hover-bg: transparent;
+$bs-gradient: none;
 
 // LAYOUT
 $spacers: (
@@ -97,8 +110,10 @@ $navBar-height-mobile: 3.25rem;
   border: none;
   box-shadow: none;
   background-image: none;
-  padding: 0.75rem 1rem;
+  padding: 1rem;
   transition: all 0.2s ease;
+  max-width: max-content;
+  font-size: $preset-4;
 
   &:hover {
     color: $white;
@@ -119,6 +134,8 @@ $navBar-height-mobile: 3.25rem;
   background-image: none;
   padding: 0.75rem 1rem;
   transition: all 0.2s ease;
+  font-size: $preset-4;
+  font-weight: bold;
 
   &:hover {
     color: $grey-900;
@@ -177,4 +194,18 @@ $navBar-height-mobile: 3.25rem;
     opacity: 100%;
     box-shadow: none;
   }
+}
+
+html,
+body,
+span2 {
+  height: 100%;
+}
+
+.dropdown-menu {
+  cursor: pointer;
+}
+
+.dropdown-toggle::after {
+  border: none !important;
 }

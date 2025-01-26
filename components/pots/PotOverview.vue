@@ -1,5 +1,5 @@
 <template>
-  <div class="row row-cols-1 row-cols-lg-2 g-0">
+  <div class="row row-cols-1 row-cols-md-2 g-0">
     <div
       class="col d-flex bg-beige-100 rounded-3 align-items-center p-4"
       style="max-width: 15.625rem"
@@ -10,7 +10,7 @@
         <p class="fw-bold fs-1 text-grey-900 m-0">{{ totalAmountSaved }}</p>
       </div>
     </div>
-    <div class="col row row-cols-2 g-0 mt-5 mt-lg-0 ms-lg-5">
+    <div class="col row row-cols-2 g-0 mt-5 mt-md-0 ms-md-5">
       <div
         v-for="(item, index) in data.slice(0, 4)"
         :key="index"

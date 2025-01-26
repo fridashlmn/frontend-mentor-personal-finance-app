@@ -1,5 +1,5 @@
 <template>
-  <div class="container overflow-hidden px-8 py-7">
+  <div class="container overflow-hidden px-8 py-6 py-md-7">
     <h1 class="fw-bold">Overview</h1>
     <div class="row gx-6 my-5 my-md-7 gy-3 gy-md-0">
       <div class="col">
