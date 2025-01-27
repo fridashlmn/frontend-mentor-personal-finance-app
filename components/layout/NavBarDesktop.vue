@@ -37,11 +37,10 @@
 <script setup lang="ts">
 import LogoLarge from '~/assets/images/logo-large.svg?component'
 import LogoSmall from '~/assets/images/logo-small.svg?component'
-
+import { ref } from 'vue'
 import IconMinimize from '~/assets/images/icon-minimize-menu.svg?component'
 import { navigationItems } from '~/content/navigation'
 
-// eslint-disable-next-line no-undef
 const isMenuCollapsed = ref<boolean>(false)
 
 function toggleSidebar(): void {

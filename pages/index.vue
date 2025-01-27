@@ -63,6 +63,7 @@ import { toCurrency } from '~/utils/formatter'
 import data from '~/content/data.json'
 import PotOverview from '~/components/pots/PotOverview.vue'
 import RecurringBillsOverview from '~/components/recurringBills/RecurringBillsOverview.vue'
+import { computed } from 'vue'
 
 export type Pot = {
   name: string
@@ -80,7 +81,6 @@ export type Transaction = {
   recurring: boolean
 }
 
-// eslint-disable-next-line no-undef
 const uniqueRecurringBills = computed(() => {
   const recurringBills = data.transactions.filter(
     (transaction) => transaction.recurring,

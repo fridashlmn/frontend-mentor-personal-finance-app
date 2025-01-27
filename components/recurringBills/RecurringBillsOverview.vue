@@ -15,6 +15,7 @@
 <script setup lang="ts">
 import type { Transaction } from '~/pages/index.vue'
 import { toCurrency } from '~/utils/formatter'
+import { computed } from 'vue'
 
 interface Props {
   transactions: Transaction[]
@@ -23,7 +24,6 @@ interface Props {
 const props = defineProps<Props>()
 const today = new Date().getDate()
 
-// eslint-disable-next-line no-undef
 const paidBillsAmount = computed(() => {
   const paidBills = props.transactions.filter(
     (transaction) =>
@@ -38,7 +38,6 @@ const paidBillsAmount = computed(() => {
   )
 })
 
-// eslint-disable-next-line no-undef
 const totalUpcoming = computed(() => {
   const unpaidBills = props.transactions.filter(
     (transaction) => new Date(transaction.date).getDate() > today,
@@ -52,7 +51,6 @@ const totalUpcoming = computed(() => {
   )
 })
 
-// eslint-disable-next-line no-undef
 const dueSoon = computed(() => {
   const unpaidBillsDueInSevenDays = props.transactions.filter(
     (transaction) =>
@@ -68,7 +66,6 @@ const dueSoon = computed(() => {
   )
 })
 
-// eslint-disable-next-line no-undef
 const displayItems = computed(() => {
   return [
     {

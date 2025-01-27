@@ -54,6 +54,7 @@
 <script setup lang="ts">
 import IconEllipsis from '~/assets/images/icon-ellipsis.svg?component'
 import { toCurrency } from '~/utils/formatter'
+import { computed } from 'vue'
 
 interface Props {
   name: string
@@ -62,12 +63,16 @@ interface Props {
   theme: string
 }
 const props = defineProps<Props>()
-// eslint-disable-next-line no-undef
+
 const percent = computed(() => {
   return ((props.total / props.target) * 100).toFixed(1)
 })
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
+.dropdown-toggle::after {
+  border: none !important;
+}
+
 .dot {
   height: 1rem;
   width: 1rem;

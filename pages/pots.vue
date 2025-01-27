@@ -1,5 +1,5 @@
 <template>
-  <div class="container overflow-hidden px-8 py-6 py-md-7">
+  <div class="container overflow-hidden px-4 px-md-8 py-6 py-md-7">
     <div class="row align-items-center justify-content-around mb-7">
       <h1 class="fw-bold col">Pots</h1>
       <button class="btn btn-primary col">+ Add New Pot</button>

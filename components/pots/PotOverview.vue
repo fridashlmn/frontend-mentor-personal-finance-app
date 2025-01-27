@@ -37,6 +37,7 @@
 import { toCurrency } from '~/utils/formatter'
 import IconPot from '~/assets/images/icon-pot.svg?component'
 import type { Pot } from '~/pages/index.vue'
+import { computed } from 'vue'
 
 interface Props {
   pots: Pot[]
@@ -44,7 +45,6 @@ interface Props {
 
 const props = defineProps<Props>()
 
-// eslint-disable-next-line no-undef
 const totalAmountSaved = computed(() => {
   const totalAmount = props.pots
     .map((pot) => pot.total)
