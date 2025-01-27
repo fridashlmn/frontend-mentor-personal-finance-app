@@ -65,22 +65,6 @@ import PotOverview from '~/components/pots/PotOverview.vue'
 import RecurringBillsOverview from '~/components/recurringBills/RecurringBillsOverview.vue'
 import { computed } from 'vue'
 
-export type Pot = {
-  name: string
-  target: number
-  total: number
-  theme: string
-}
-
-export type Transaction = {
-  avatar: string
-  name: number
-  category: number
-  date: string
-  amount: number
-  recurring: boolean
-}
-
 const uniqueRecurringBills = computed(() => {
   const recurringBills = data.transactions.filter(
     (transaction) => transaction.recurring,

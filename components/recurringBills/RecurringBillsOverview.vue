@@ -13,7 +13,7 @@
 </template>
 
 <script setup lang="ts">
-import type { Transaction } from '~/pages/index.vue'
+import type { Transaction } from '~/@types/types'
 import { toCurrency } from '~/utils/formatter'
 import { computed } from 'vue'
 

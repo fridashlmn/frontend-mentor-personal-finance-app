@@ -83,6 +83,7 @@ $body-bg: $beige-100;
 $body-bg-rgb: (248, 244, 240);
 $body-color: $grey-900;
 $body-color-rgb: (32, 31, 36);
+
 $progress-height: 0.5rem;
 $dropdown-bg: $white;
 $dropdown-border-color: $white;
@@ -95,7 +96,11 @@ $dropdown-divider-margin-y: 12px;
 $dropdown-min-width: none;
 $bs-dropdown-link-hover-color: initial;
 $dropdown-link-hover-bg: transparent;
+
 $bs-gradient: none;
+
 $table-bg: $white;
+$table-border-color: $grey-100;
+
 $input-placeholder-color: $beige-500;
 $input-font-size: $preset-4;

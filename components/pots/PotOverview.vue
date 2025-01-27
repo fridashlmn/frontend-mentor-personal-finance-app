@@ -36,7 +36,7 @@
 <script setup lang="ts">
 import { toCurrency } from '~/utils/formatter'
 import IconPot from '~/assets/images/icon-pot.svg?component'
-import type { Pot } from '~/pages/index.vue'
+import type { Pot } from '~/@types/types'
 import { computed } from 'vue'
 
 interface Props {

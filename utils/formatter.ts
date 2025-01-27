@@ -14,3 +14,14 @@ export function toCurrency(value: number, variant?: string): string {
   })
   return formatter.format(value)
 }
+
+export function formattedDueDate(date: string) {
+  const number = new Date(date).getDate()
+  const nthNumber =
+    number > 0
+      ? ['th', 'st', 'nd', 'rd'][
+          (number > 3 && number < 21) || number % 10 > 3 ? 0 : number % 10
+        ]
+      : ''
+  return `Monthly-${number}${nthNumber}`
+}
