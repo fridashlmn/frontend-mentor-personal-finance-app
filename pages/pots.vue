@@ -1,11 +1,11 @@
 <template>
   <Container>
     <template #header>
-      <h1 class="col fw-bold">Pots</h1>
+      <h1 class="col fw-bold m-0">Pots</h1>
       <button class="col btn btn-primary">+ Add New Pot</button>
     </template>
     <template #content>
-      <div class="row row-cols-1 row-cols-lg-2 g-6">
+      <div class="row row-cols-1 row-cols-lg-2 g-6 my-2 my-md-3">
         <div v-for="(item, index) in pots" :key="index" class="col">
           <PotCard
             :name="item.name"

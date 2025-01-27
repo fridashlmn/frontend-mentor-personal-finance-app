@@ -1,11 +1,16 @@
 <template>
   <Container>
     <template #header>
-      <h1 class="col fw-bold">Recurring Bills</h1>
+      <h1 class="col fw-bold m-0">Recurring Bills</h1>
     </template>
     <template #content>
-      <div class="row row-cols-1 row-cols-lg-2">
-        <div class="col col-lg-4">Card 1 Card 2</div>
+      <div class="row row-cols-1 row-cols-lg-2 my-5 my-md-7 gx-6">
+        <RecurringBillsSummary
+          :recurring-bills="recurringBills"
+          :paid-bills="paidBills"
+          :total-upcoming="totalUpcoming"
+          :due-soon="dueSoon"
+        />
         <div class="col col-lg-8 table-responsive bg-white rounded-3 p-7">
           <nav class="navbar row p-0 justify-content-between">
             <InputField
@@ -72,6 +77,7 @@ import { computed } from 'vue'
 import DataTable from '~/components/layout/DataTable.vue'
 import { formattedDueDate, toCurrency } from '~/utils/formatter'
 import Container from '~/components/layout/Container.vue'
+import RecurringBillsSummary from '~/components/recurringBills/RecurringBillsSummary.vue'
 
 // eslint-disable-next-line no-undef
 const viewport = useViewport()
@@ -92,6 +98,10 @@ const recurringBills = computed(() => {
   return transactions
     .filter((transaction) => transaction.recurring)
     .sort((a, b) => new Date(a.date).getDate() - new Date(b.date).getDate())
+    .filter(
+      (value, index, self) =>
+        index === self.findIndex((t) => t.name === value.name),
+    )
 })
 
 const paidBills = computed(() => {
@@ -110,17 +120,14 @@ const dueSoon = computed(() => {
     .map((obj) => ({ ...obj, theme: '#c94736', icon: IconDue }))
 })
 
-const dueLater = computed(() => {
+const totalUpcoming = computed(() => {
   return recurringBills.value
     .filter((transaction) => new Date(transaction.date).getDate() > today)
     .map((obj) => ({ ...obj, theme: 'grey-500' }))
 })
 
 const displayItems = computed(() => {
-  return [...paidBills.value, ...dueSoon.value, ...dueLater.value].filter(
-    (value, index, self) =>
-      index === self.findIndex((t) => t.name === value.name),
-  )
+  return [...paidBills.value, ...dueSoon.value, ...totalUpcoming.value]
 })
 </script>
 <style lang="scss">

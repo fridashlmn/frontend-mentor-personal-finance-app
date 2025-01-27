@@ -17,7 +17,7 @@
         <span class="arrow"></span>
       </button>
     </div>
-    <IconSort v-else />
+    <IconSort v-else class="iconContainer" @click="handleClick()" />
     <ul
       class="selectDropdown"
       role="listbox"
@@ -90,37 +90,37 @@ function handleSelect(selected: { id: number; label: string }): void {
   .innerContainer {
     display: flex;
     align-items: center;
-  }
 
-  .helperMessage {
-    width: 100%;
-    text-align: end;
-    margin-right: 8px;
-    color: $grey-500;
-  }
-
-  .selectButton {
-    width: 100%;
-    font-size: $preset-4;
-    background-color: transparent;
-    padding: 0.75rem 1.25rem;
-    border: 1px solid #caced1;
-    border-radius: 0.25rem;
-    cursor: pointer;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-
-    .selectedValue {
+    .helperMessage {
       width: 100%;
-      text-align: left;
-      margin-right: 1rem;
+      text-align: end;
+      margin-right: 8px;
+      color: $grey-500;
     }
 
-    .arrow {
-      border-left: 5px solid transparent;
-      border-right: 5px solid transparent;
-      border-top: 6px solid $grey-900;
+    .selectButton {
+      width: 100%;
+      font-size: $preset-4;
+      background-color: transparent;
+      padding: 0.75rem 1.25rem;
+      border: 1px solid #caced1;
+      border-radius: 0.25rem;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      .selectedValue {
+        width: 100%;
+        text-align: left;
+        margin-right: 1rem;
+      }
+
+      .arrow {
+        border-left: 5px solid transparent;
+        border-right: 5px solid transparent;
+        border-top: 6px solid $grey-900;
+      }
     }
   }
 
@@ -142,9 +142,10 @@ function handleSelect(selected: { id: number; label: string }): void {
       width: 86%;
       left: 8%;
     }
+
     &.large {
-      width: 50%;
-      left: 46%;
+      width: 60%;
+      left: 35%;
     }
 
     li {
@@ -166,7 +167,8 @@ function handleSelect(selected: { id: number; label: string }): void {
       .divider {
         width: 100%;
         border: 1px solid $grey-100;
-        margin: 12px 0;
+        margin: 0.75rem 0;
+        opacity: 100%;
       }
     }
 
@@ -181,6 +183,12 @@ function handleSelect(selected: { id: number; label: string }): void {
     input:focus ~ label {
       font-weight: bold;
     }
+  }
+
+  .iconContainer + .selectDropdown {
+    width: 7.75rem;
+    left: -6rem;
+    margin-top: 2rem;
   }
 }
 

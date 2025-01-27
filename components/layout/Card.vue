@@ -1,48 +1,59 @@
 <template>
-  <div
-    class="rounded-3"
-    :class="[variant === 'large' ? 'p-7' : 'p-6', `bg-${backgroundColor}`]"
-  >
-    <div class="row align-items-start my-0 mx-auto">
-      <h2 v-if="variant === 'large'" class="fw-bold col p-0">
-        {{ title }}
-      </h2>
-      <h4 v-else class="col p-0 m-0" :class="`text-${color}`">
-        {{ title }}
-      </h4>
-      <button
-        v-if="linkLabel && linkTarget && variant === 'large'"
-        class="d-flex align-items-center justify-content-end col btn-dark text-end"
-        @click="$router.push({ path: linkTarget })"
-      >
-        <span class="me-4">
-          {{ linkLabel }}
-        </span>
-        <IconCaretRight />
-      </button>
-    </div>
+  <div>
     <div
-      class="row align-items-start"
-      :class="variant === 'large' ? 'mt-5' : 'mt-3'"
+      :class="[padding, variant, 'rounded-3 height ', `bg-${backgroundColor}`]"
     >
-      <slot />
+      <slot name="header" />
+      <div
+        class="row align-items-start"
+        :class="variant === 'large' ? 'mt-5' : 'mt-3'"
+      >
+        <slot name="content" />
+      </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import IconCaretRight from '~/assets/images/icon-caret-right.svg?component'
+import { computed } from 'vue'
+
 interface Props {
-  variant?: 'small' | 'large'
-  title: string
-  linkLabel?: string
-  linkTarget?: string
+  variant?: 'extraSmall' | 'small' | 'large' | 'responsive'
   backgroundColor?: string
   color?: string
 }
-withDefaults(defineProps<Props>(), {
+const props = withDefaults(defineProps<Props>(), {
   variant: 'large',
   backgroundColor: 'white',
   color: 'grey-500',
 })
+
+const padding = computed(() => {
+  if (props.variant === 'large') {
+    return 'p-7'
+  }
+  if (props.variant === 'small' || props.variant === 'responsive') {
+    return 'p-6'
+  }
+  if (props.variant === 'extraSmall') {
+    return 'p-5 p-lg-6'
+  }
+  return ''
+})
 </script>
+<style lang="scss">
+.height {
+  height: auto;
+
+  @media screen and (max-width: 991px) {
+    height: 100%;
+  }
+}
+
+.responsive {
+  @media screen and (max-width: 767px) {
+    display: flex;
+    align-items: flex-end;
+  }
+}
+</style>
