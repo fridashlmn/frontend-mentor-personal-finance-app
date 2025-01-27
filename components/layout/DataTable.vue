@@ -1,6 +1,6 @@
 <template>
   <table class="table">
-    <thead class="tHead">
+    <thead v-if="viewport.isGreaterThan('tablet')" class="tHead">
       <tr>
         <th v-for="(item, index) in tableHead" :key="index" scope="col">
           {{ item }}
@@ -17,6 +17,9 @@ interface Props {
   tableHead: string[]
 }
 defineProps<Props>()
+
+// eslint-disable-next-line no-undef
+const viewport = useViewport()
 </script>
 <style lang="scss">
 @import 'assets/css/variables';

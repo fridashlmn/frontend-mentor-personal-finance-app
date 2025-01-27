@@ -1,13 +1,13 @@
 <template>
   <main class="container-fluid g-0">
-    <div v-if="viewport.isGreaterThan('tablet')" class="row align-items-start">
-      <NavBarDesktop class="min-vh-100 col" />
+    <div v-if="viewport.isGreaterThan('tablet')" class="row">
+      <NavBarDesktop class="min-vh-100 col-2-5" />
       <NuxtPage class="min-vh-100 col" />
     </div>
-    <div v-else class="row align-items-start">
+    <template v-else>
       <NuxtPage />
       <NavBarMobile />
-    </div>
+    </template>
   </main>
 </template>
 <script setup lang="ts">

@@ -1,18 +1,29 @@
 <template>
-  <div class="custom-select">
-    <button
-      class="select-button"
-      role="combobox"
-      aria-labelledby="select button"
-      aria-haspopup="listbox"
-      aria-expanded="false"
-      aria-controls="select-dropdown"
-      @click="handleClick()"
+  <div class="customSelect">
+    <div v-if="viewport.isGreaterThan('tablet')" class="innerContainer">
+      <span v-if="helperMessage" class="helperMessage">
+        {{ helperMessage }}
+      </span>
+      <button
+        class="selectButton"
+        role="combobox"
+        aria-labelledby="select button"
+        aria-haspopup="listbox"
+        aria-expanded="false"
+        aria-controls="select-dropdown"
+        @click="handleClick()"
+      >
+        <span class="selectedValue">{{ selectedItem.label }}</span>
+        <span class="arrow"></span>
+      </button>
+    </div>
+    <IconSort v-else />
+    <ul
+      class="selectDropdown"
+      role="listbox"
+      id="select-dropdown"
+      :class="helperMessage ? 'large' : 'small'"
     >
-      <span class="selected-value">{{ selectedItem.label }}</span>
-      <span class="arrow"></span>
-    </button>
-    <ul class="select-dropdown" role="listbox" id="select-dropdown">
       <li
         v-for="item in selectItems"
         :key="item.id"
@@ -36,19 +47,25 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
+import IconSort from '~/assets/images/icon-sort-mobile.svg'
 
 interface Props {
   selectItems: { id: number; label: string }[]
+  helperMessage?: string
 }
 const props = defineProps<Props>()
+
+// eslint-disable-next-line no-undef
+const viewport = useViewport()
+
 const selectedItem = ref({
   id: props.selectItems[0].id,
   label: props.selectItems[0].label,
 })
 
 function handleClick(): void {
-  const customSelect: Element | null = document.querySelector('.custom-select')
-  const selectBtn: Element | null = document.querySelector('.select-button')
+  const customSelect: Element | null = document.querySelector('.customSelect')
+  const selectBtn: Element | null = document.querySelector('.selectButton')
   customSelect?.classList.toggle('active')
   selectBtn?.setAttribute(
     'aria-expanded',
@@ -57,19 +74,32 @@ function handleClick(): void {
 }
 
 function handleSelect(selected: { id: number; label: string }): void {
-  const customSelect: Element | null = document.querySelector('.custom-select')
+  const customSelect: Element | null = document.querySelector('.customSelect')
   selectedItem.value = selected
   customSelect?.classList.remove('active')
 }
 </script>
 <style lang="scss" scoped>
 @import 'assets/css/variables';
-.custom-select {
+.customSelect {
   position: relative;
   font-size: $preset-4;
   color: $grey-900;
+  max-width: max-content;
 
-  .select-button {
+  .innerContainer {
+    display: flex;
+    align-items: center;
+  }
+
+  .helperMessage {
+    width: 100%;
+    text-align: end;
+    margin-right: 8px;
+    color: $grey-500;
+  }
+
+  .selectButton {
     width: 100%;
     font-size: $preset-4;
     background-color: transparent;
@@ -81,8 +111,10 @@ function handleSelect(selected: { id: number; label: string }): void {
     justify-content: space-between;
     align-items: center;
 
-    .selected-value {
+    .selectedValue {
+      width: 100%;
       text-align: left;
+      margin-right: 1rem;
     }
 
     .arrow {
@@ -92,7 +124,7 @@ function handleSelect(selected: { id: number; label: string }): void {
     }
   }
 
-  .select-dropdown {
+  .selectDropdown {
     position: absolute;
     list-style: none;
     width: 86%;
@@ -105,6 +137,15 @@ function handleSelect(selected: { id: number; label: string }): void {
     opacity: 0;
     visibility: hidden;
     box-shadow: 0 4px 18px rgba(0, 0, 0, 0.25);
+
+    &.small {
+      width: 86%;
+      left: 8%;
+    }
+    &.large {
+      width: 50%;
+      left: 46%;
+    }
 
     li {
       position: relative;
@@ -143,12 +184,12 @@ function handleSelect(selected: { id: number; label: string }): void {
   }
 }
 
-.custom-select.active .select-dropdown {
+.customSelect.active .selectDropdown {
   opacity: 1;
   visibility: visible;
 }
 
-.custom-select.active .arrow {
+.customSelect.active .arrow {
   transform: rotate(180deg);
 }
 </style>

@@ -72,6 +72,8 @@ $spacers: (
   7: 2rem,
   //32px
   8: 2.5rem, //40px
+  9: 4.75rem, // just for the mobile container padding-bottom (24px+ $navBar-height-mobile)
+  10: 6.625rem, // just for the tablet container padding-bottom (24px+ $navBar-height-tablet)
 );
 
 $sidebar-width: 18.75rem;

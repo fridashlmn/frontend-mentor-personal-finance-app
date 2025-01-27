@@ -1,6 +1,6 @@
 <template>
   <nav
-    class="col-2-5 sidebar rounded-end-4 bg-grey-900 min-vh-100 d-flex flex-column justify-content-between align-items-baseline pb-6"
+    class="sidebar rounded-end-4 bg-grey-900 min-vh-100 d-flex flex-column justify-content-between align-items-baseline pb-6"
   >
     <div :class="!isMenuCollapsed ? 'w-100' : ''">
       <div class="pt-8 pb-8 px-7">

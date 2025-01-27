@@ -1,46 +1,65 @@
 <template>
-  <div class="container overflow-hidden px-4 px-md-8 py-6 py-md-7">
-    <div class="row">
+  <Container>
+    <template #header>
       <h1 class="col fw-bold">Recurring Bills</h1>
-    </div>
-    <div class="row">
-      <div class="col-4">Card 1</div>
-      <div class="col-8 table-responsive bg-white rounded-3 p-7">
-        <nav class="navbar row p-0">
-          <InputField
-            class="col-6"
-            placeholder="Search bills"
-            type="search"
-            :icon="IconSearch"
-          />
-          <SelectDropdown
-            class="col-md-3 offset-md-3"
-            :select-items="filterItems"
-          />
-        </nav>
-        <DataTable class="mt-6" :table-head="tableHead" :data="recurringBills">
-          <tr v-for="item in displayItems" :key="item.date">
-            <td class="tableName">
-              <img
-                :src="item.avatar"
-                alt="avatar"
-                class="avatar me-4 rounded-circle"
-              />
-              {{ item.name }}
-            </td>
-            <td class="tableDate" :style="`color:${item.theme}`">
-              <div class="test">
+    </template>
+    <template #content>
+      <div class="row row-cols-1 row-cols-lg-2">
+        <div class="col col-lg-4">Card 1 Card 2</div>
+        <div class="col col-lg-8 table-responsive bg-white rounded-3 p-7">
+          <nav class="navbar row p-0 justify-content-between">
+            <InputField
+              class="col"
+              placeholder="Search bills"
+              type="search"
+              :icon="IconSearch"
+              style="max-width: 320px"
+            />
+            <SelectDropdown
+              class="col"
+              :select-items="filterItems"
+              helper-message="Sort by"
+            />
+          </nav>
+          <DataTable
+            class="mt-6"
+            :table-head="tableHead"
+            :data="recurringBills"
+          >
+            <tr v-for="item in displayItems" :key="item.date">
+              <td class="tableName">
+                <img
+                  :src="item.avatar"
+                  alt="avatar"
+                  class="avatar me-4 rounded-circle"
+                />
+                {{ item.name }}
+                <div
+                  v-if="viewport.isLessThan('tablet')"
+                  class="mobileDate"
+                  :style="`color:${item.theme}`"
+                >
+                  {{ formattedDueDate(item.date) }}
+                  <component v-if="item.icon" :is="item.icon" class="ms-2" />
+                </div>
+              </td>
+              <td
+                v-if="viewport.isGreaterOrEquals('tablet')"
+                class="tableDate"
+                :style="`color:${item.theme}`"
+              >
                 {{ formattedDueDate(item.date) }}
                 <component v-if="item.icon" :is="item.icon" class="ms-2" />
-              </div>
-            </td>
-            <td class="tableAmount">{{ toCurrency(item.amount) }}</td>
-          </tr>
-        </DataTable>
+              </td>
+              <td class="tableAmount">
+                {{ toCurrency(item.amount) }}
+              </td>
+            </tr>
+          </DataTable>
+        </div>
       </div>
-      <div class="col-4">Card 2</div>
-    </div>
-  </div>
+    </template>
+  </Container>
 </template>
 <script setup lang="ts">
 import { transactions } from '~/content/data.json'
@@ -52,6 +71,10 @@ import IconPaid from '~/assets/images/icon-bill-paid.svg?component'
 import { computed } from 'vue'
 import DataTable from '~/components/layout/DataTable.vue'
 import { formattedDueDate, toCurrency } from '~/utils/formatter'
+import Container from '~/components/layout/Container.vue'
+
+// eslint-disable-next-line no-undef
+const viewport = useViewport()
 
 const filterItems: { id: number; label: string }[] = [
   { id: 1, label: 'Latest' },
@@ -112,10 +135,24 @@ const displayItems = computed(() => {
   font-weight: bold;
   font-size: $preset-4;
   vertical-align: middle;
+
+  @media screen and (max-width: 530px) {
+    vertical-align: bottom;
+  }
 }
 
 .tableDate {
   font-size: $preset-5;
   vertical-align: middle;
+
+  @media screen and (max-width: 530px) {
+    vertical-align: middle;
+  }
+}
+
+.mobileDate {
+  font-weight: normal;
+  font-size: $preset-5;
+  margin-top: 8px;
 }
 </style>

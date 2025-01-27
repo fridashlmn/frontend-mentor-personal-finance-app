@@ -1,6 +1,6 @@
 <template>
   <div
-    class="container rounded-3"
+    class="rounded-3"
     :class="[variant === 'large' ? 'p-7' : 'p-6', `bg-${backgroundColor}`]"
   >
     <div class="row align-items-start my-0 mx-auto">
