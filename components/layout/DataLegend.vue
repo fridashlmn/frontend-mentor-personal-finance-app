@@ -3,6 +3,10 @@
     v-for="(item, index) in data.slice(0, 4)"
     :key="index"
     class="col d-flex"
+    :class="{
+      'firstRowMargin': variant === 'horizontal',
+      'mb-4': variant === 'vertical',
+    }"
   >
     <hr
       class="themeBorder opacity-100 m-0"
@@ -24,6 +28,7 @@ import type { Legend } from '~/@types/types'
 
 interface Props {
   data: Legend[]
+  variant: 'horizontal' | 'vertical'
 }
 
 defineProps<Props>()

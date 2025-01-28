@@ -41,5 +41,7 @@ const options = {
 <style lang="scss">
 .chartCanvas {
   position: relative;
+  height: 15rem;
+  margin-top: 1.5rem;
 }
 </style>

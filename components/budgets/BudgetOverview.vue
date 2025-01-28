@@ -1,6 +1,6 @@
 <template>
   <div class="row">
-    <DoughnutChart class="col-8 test" :data="chartData">
+    <DoughnutChart class="col-8" :data="chartData">
       <div
         class="innerCircle d-flex flex-column align-items-center justify-content-center"
       >
@@ -12,7 +12,9 @@
         </span>
       </div>
     </DoughnutChart>
-    <div class="col-4"><DataLegend :data="legendData" /></div>
+    <div class="col-4 mt-8">
+      <DataLegend :data="legendData" variant="vertical" />
+    </div>
   </div>
 </template>
 
@@ -101,10 +103,6 @@ const legendData = computed(() => {
 </script>
 <style lang="scss">
 .innerCircle {
-  transform: translate(-1%, -270%);
-}
-
-.test {
-  height: 240px;
+  transform: translate(0%, -238%);
 }
 </style>

@@ -18,7 +18,7 @@
               placeholder="Search bills"
               type="search"
               :icon="IconSearch"
-              style="max-width: 320px"
+              style="max-width: 20rem"
             />
             <SelectDropdown
               class="col"
@@ -160,6 +160,6 @@ const displayItems = computed(() => {
 .mobileDate {
   font-weight: normal;
   font-size: $preset-5;
-  margin-top: 8px;
+  margin-top: 0.5rem;
 }
 </style>

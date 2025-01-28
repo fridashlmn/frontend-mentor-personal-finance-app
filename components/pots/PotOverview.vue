@@ -13,8 +13,8 @@
       </div>
     </div>
     <div class="col mt-5 mt-md-0">
-      <div class="row row-cols-2 g-0">
-        <DataLegend :data="legendData" />
+      <div class="row row-cols-2 g-0" style="height: 100%">
+        <DataLegend :data="legendData" variant="horizontal" />
       </div>
     </div>
   </div>

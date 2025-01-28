@@ -29,8 +29,8 @@
         </div>
       </div>
       <div class="gridContainer" id="masonry">
-        <div class="grid-sizer"></div>
-        <div class="grid-item grid-item--width1 grid-item--height1">
+        <div class="gridSizer"></div>
+        <div class="gridItem">
           <OverviewCard
             title="Pots"
             link-label="See Details"
@@ -40,13 +40,12 @@
             <PotOverview :pots="data.pots" />
           </OverviewCard>
         </div>
-        <div class="grid-item grid-item--width1 grid-item--height2">
+        <div class="gridItem">
           <OverviewCard
             title="Budgets"
             link-label="See Details"
             link-target="/budgets"
-            class="mb-6"
-            style="height: 100%"
+            style="height: 25.625rem"
           >
             <BudgetOverview
               :budgets="data.budgets"
@@ -54,24 +53,22 @@
             />
           </OverviewCard>
         </div>
-
-        <div class="grid-item grid-item--width1 grid-item--height3">
+        <div class="gridItem">
           <OverviewCard
             title="Transactions"
             link-label="View All"
             link-target="/transactions"
-            class="me-lg-6 mt-6"
-            style="margin: 24px 24px 0 0"
+            class="me-lg-6 mt-4 mt-md-6"
           >
             <p>CONTENT</p>
           </OverviewCard>
         </div>
-        <div class="grid-item grid-item--width1 grid-item--height4">
+        <div class="gridItem">
           <OverviewCard
             title="Recurring Bills"
             link-label="See Details"
             link-target="/recurring-bills"
-            class="mt-6"
+            class="mt-4 mt-md-6"
           >
             <RecurringBillsOverview :transactions="uniqueRecurringBills" />
           </OverviewCard>
@@ -103,21 +100,24 @@ onMounted(async () => {
   if (process.browser) {
     let { default: Masonry } = await import('masonry-layout')
     new Masonry('#masonry', {
-      itemSelector: '.grid-item',
-      columnWidth: '.grid-sizer',
+      itemSelector: '.gridItem',
+      columnWidth: '.gridSizer',
       percentPosition: true,
     })
   }
 })
 </script>
 <style>
+.gridContainer {
+  padding-bottom: 4rem;
+}
 .gridContainer:after {
   content: '';
   display: block;
   clear: both;
 }
-.grid-sizer,
-.grid-item {
+.gridSizer,
+.gridItem {
   width: 50%;
 
   @media screen and (max-width: 769px) {
@@ -125,20 +125,7 @@ onMounted(async () => {
   }
 }
 
-.grid-item {
+.gridItem {
   height: fit-content;
-}
-
-.grid-item--height1 {
-  height: 218px;
-}
-.grid-item--height2 {
-  height: 410px;
-}
-.grid-item--height3 {
-  height: 519px;
-}
-.grid-item--height4 {
-  height: 327px;
 }
 </style>
