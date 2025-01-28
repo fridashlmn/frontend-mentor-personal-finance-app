@@ -1,10 +1,11 @@
 <template>
   <Container>
     <template #header>
-      <h1 class="col fw-bold">Budgets</h1>
+      <h1 class="col fw-bold m-0">Budgets</h1>
+      <button class="col btn btn-primary">+ Add New Budget</button>
     </template>
     <template #content>
-      <button class="btn btn-primary">share</button>
+      <div class="row row-cols-1 row-cols-lg-2 g-6 my-2 my-md-3">summary</div>
     </template>
   </Container>
 </template>

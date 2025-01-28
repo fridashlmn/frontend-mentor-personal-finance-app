@@ -1,5 +1,5 @@
 <template>
-  <Card variant="small" :background-color="backgroundColor" :color="color">
+  <Card variant="large" :background-color="backgroundColor" :color="color">
     <template #header>
       <div class="row align-items-start my-0 mx-auto">
         <h2 v-if="variant === 'large'" class="fw-bold col p-0">

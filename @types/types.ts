@@ -32,3 +32,14 @@ export interface Budget {
   maximum: number
   theme: string
 }
+
+export type DoughnutChartData = {
+  labels: string[]
+  datasets: [{ backgroundColor: string[]; data: number[] }]
+}
+
+export interface Legend {
+  theme: string
+  label: string
+  value: string
+}

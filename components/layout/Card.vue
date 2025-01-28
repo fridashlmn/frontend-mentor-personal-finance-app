@@ -1,15 +1,8 @@
 <template>
-  <div>
-    <div
-      :class="[padding, variant, 'rounded-3 height ', `bg-${backgroundColor}`]"
-    >
-      <slot name="header" />
-      <div
-        class="row align-items-start"
-        :class="variant === 'large' ? 'mt-5' : 'mt-3'"
-      >
-        <slot name="content" />
-      </div>
+  <div :class="[padding, variant, 'rounded-3', `bg-${backgroundColor}`]">
+    <slot name="header" />
+    <div :class="variant === 'large' ? 'mt-5' : 'mt-3'">
+      <slot name="content" />
     </div>
   </div>
 </template>
@@ -42,14 +35,6 @@ const padding = computed(() => {
 })
 </script>
 <style lang="scss">
-.height {
-  height: auto;
-
-  @media screen and (max-width: 991px) {
-    height: 100%;
-  }
-}
-
 .responsive {
   @media screen and (max-width: 767px) {
     display: flex;
