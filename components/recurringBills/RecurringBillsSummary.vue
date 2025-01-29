@@ -102,12 +102,6 @@ const dueSoonTotalAmount = computed(() => {
 </script>
 <style lang="scss">
 @import 'assets/css/variables';
-.dividerLine {
-  width: 100%;
-  border: 1px solid $grey-100;
-  margin: 1rem 0;
-  opacity: 100%;
-}
 
 .fullHeight {
   height: 100%;

@@ -128,3 +128,21 @@ input[type='search' i]:enabled:read-write:-webkit-any(
     box-shadow: none;
   }
 }
+
+.themeBorder {
+  border-style: solid;
+  border-width: 0.125rem;
+  border-radius: 0.5rem;
+}
+
+.dividerLine {
+  width: 100%;
+  border: 1px solid $grey-100;
+  margin: 1rem 0;
+  opacity: 100%;
+
+  &.lineDark {
+    border: 1px solid $grey-500;
+    opacity: 15%;
+  }
+}

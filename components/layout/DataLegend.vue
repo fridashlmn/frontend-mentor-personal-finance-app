@@ -34,12 +34,6 @@ interface Props {
 defineProps<Props>()
 </script>
 <style lang="scss">
-.themeBorder {
-  border-style: solid;
-  border-width: 0.125rem;
-  border-radius: 0.5rem;
-}
-
 .firstRowMargin:first-of-type,
 .firstRowMargin:nth-of-type(2) {
   margin-bottom: 1rem;

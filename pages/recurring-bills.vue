@@ -44,7 +44,7 @@
                   class="mobileDate"
                   :style="`color:${item.theme}`"
                 >
-                  {{ formattedDueDate(item.date) }}
+                  Monthly-{{ formatDay(item.date) }}
                   <component v-if="item.icon" :is="item.icon" class="ms-2" />
                 </div>
               </td>
@@ -53,7 +53,7 @@
                 class="tableDate"
                 :style="`color:${item.theme}`"
               >
-                {{ formattedDueDate(item.date) }}
+                Monthly-{{ formatDay(item.date) }}
                 <component v-if="item.icon" :is="item.icon" class="ms-2" />
               </td>
               <td class="tableAmount">
@@ -75,9 +75,10 @@ import IconDue from '~/assets/images/icon-bill-due.svg?component'
 import IconPaid from '~/assets/images/icon-bill-paid.svg?component'
 import { computed } from 'vue'
 import DataTable from '~/components/layout/DataTable.vue'
-import { formattedDueDate, toCurrency } from '~/utils/formatter'
+import { formatDay, toCurrency } from '~/utils/formatter'
 import Container from '~/components/layout/Container.vue'
 import RecurringBillsSummary from '~/components/recurringBills/RecurringBillsSummary.vue'
+import { globalToday } from '~/content/date'
 
 // eslint-disable-next-line no-undef
 const viewport = useViewport()
@@ -92,7 +93,7 @@ const filterItems: { id: number; label: string }[] = [
 ]
 
 const tableHead: string[] = ['Bill Title', 'Due Date', 'Amount']
-const today = new Date().getDate()
+const today = globalToday.getDate()
 
 const recurringBills = computed(() => {
   return transactions

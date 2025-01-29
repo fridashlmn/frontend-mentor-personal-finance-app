@@ -42,6 +42,9 @@ const options = {
 .chartCanvas {
   position: relative;
   height: 15rem;
-  margin-top: 1.5rem;
+
+  @media screen and (max-width: 530px) {
+    margin-top: 0;
+  }
 }
 </style>

@@ -16,18 +16,18 @@
 import type { Transaction } from '~/@types/types'
 import { toCurrency } from '~/utils/formatter'
 import { computed } from 'vue'
+import { globalToday } from '~/content/date'
 
 interface Props {
   transactions: Transaction[]
 }
 
 const props = defineProps<Props>()
-const today = new Date().getDate()
+const today: number = globalToday.getDate()
 
 const paidBillsAmount = computed(() => {
   const paidBills = props.transactions.filter(
-    (transaction) =>
-      new Date(transaction.date).getDate() < new Date().getDate(),
+    (transaction) => new Date(transaction.date).getDate() < globalToday,
   )
   return toCurrency(
     paidBills

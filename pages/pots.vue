@@ -7,7 +7,7 @@
     <template #content>
       <div class="row row-cols-1 row-cols-lg-2 g-6 my-2 my-md-3">
         <div v-for="(item, index) in pots" :key="index" class="col">
-          <PotCard
+          <PotItem
             :name="item.name"
             :target="item.target"
             :total="item.total"
@@ -20,6 +20,6 @@
 </template>
 <script setup lang="ts">
 import { pots } from '~/content/data.json'
-import PotCard from '~/components/pots/PotCard.vue'
+import PotItem from '~/components/pots/PotItem.vue'
 import Container from '~/components/layout/Container.vue'
 </script>
