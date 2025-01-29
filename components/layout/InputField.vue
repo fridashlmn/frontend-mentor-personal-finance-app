@@ -1,5 +1,5 @@
 <template>
-  <form>
+  <form class="formContainer">
     <div class="inputClass">
       <component v-if="prefixIcon" :is="prefixIcon" />
       <input
@@ -40,6 +40,10 @@ function clearField(): void {
 }
 </script>
 <style lang="scss">
+.formContainer {
+  min-width: 13.438rem;
+}
+
 .inputClass {
   position: relative;
 }

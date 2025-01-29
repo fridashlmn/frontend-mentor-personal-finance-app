@@ -19,6 +19,7 @@
     "nuxt-viewport": "^2.2.0",
     "vite-svg-loader": "^5.1.0",
     "vue": "latest",
+    "vue-awesome-paginate": "^1.2.0",
     "vue-chartjs": "^5.3.2",
     "vue-masonry": "^0.16.0",
     "vue-router": "latest"

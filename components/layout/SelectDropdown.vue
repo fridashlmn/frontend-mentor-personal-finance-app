@@ -1,10 +1,11 @@
 <template>
-  <div class="customSelect">
+  <div class="customSelect" :id="`select-${selectItems[0].label}`">
     <div v-if="viewport.isGreaterThan('tablet')" class="innerContainer">
       <span v-if="helperMessage" class="helperMessage">
         {{ helperMessage }}
       </span>
       <button
+        :id="`button-${selectItems[0].label}`"
         class="selectButton"
         role="combobox"
         aria-labelledby="select button"
@@ -17,7 +18,13 @@
         <span class="arrow"></span>
       </button>
     </div>
-    <IconSort v-else class="iconContainer" @click="handleClick()" />
+    <IconSort
+      v-else-if="icon === 'sort'"
+      :is="icon"
+      class="selectIcon"
+      @click="handleClick()"
+    />
+    <IconFilter v-else :is="icon" class="selectIcon" @click="handleClick()" />
     <ul
       class="selectDropdown"
       role="listbox"
@@ -48,10 +55,12 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import IconSort from '~/assets/images/icon-sort-mobile.svg'
+import IconFilter from '~/assets/images/icon-filter-mobile.svg'
 
 interface Props {
   selectItems: { id: number; label: string }[]
   helperMessage?: string
+  icon?: 'sort' | 'filter'
 }
 const props = defineProps<Props>()
 
@@ -64,8 +73,12 @@ const selectedItem = ref({
 })
 
 function handleClick(): void {
-  const customSelect: Element | null = document.querySelector('.customSelect')
-  const selectBtn: Element | null = document.querySelector('.selectButton')
+  const customSelect: Element | null = document.querySelector(
+    `#select-${props.selectItems[0].label}`,
+  )
+  const selectBtn: Element | null = document.querySelector(
+    `#button-${props.selectItems[0].label}`,
+  )
   customSelect?.classList.toggle('active')
   selectBtn?.setAttribute(
     'aria-expanded',
@@ -74,7 +87,9 @@ function handleClick(): void {
 }
 
 function handleSelect(selected: { id: number; label: string }): void {
-  const customSelect: Element | null = document.querySelector('.customSelect')
+  const customSelect: Element | null = document.querySelector(
+    `#select-${props.selectItems[0].label}`,
+  )
   selectedItem.value = selected
   customSelect?.classList.remove('active')
 }
@@ -111,7 +126,7 @@ function handleSelect(selected: { id: number; label: string }): void {
       align-items: center;
 
       .selectedValue {
-        width: 100%;
+        width: max-content;
         text-align: left;
         margin-right: 1rem;
       }
@@ -185,10 +200,10 @@ function handleSelect(selected: { id: number; label: string }): void {
     }
   }
 
-  .iconContainer + .selectDropdown {
+  .selectIcon + .selectDropdown {
     width: 7.75rem;
-    left: -6rem;
-    margin-top: 2rem;
+    left: -3rem;
+    margin-top: 0.5rem;
   }
 }
 

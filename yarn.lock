@@ -7755,6 +7755,7 @@ __metadata:
     typescript-eslint: "npm:^8.21.0"
     vite-svg-loader: "npm:^5.1.0"
     vue: "npm:latest"
+    vue-awesome-paginate: "npm:^1.2.0"
     vue-chartjs: "npm:^5.3.2"
     vue-masonry: "npm:^0.16.0"
     vue-router: "npm:latest"
@@ -9257,6 +9258,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"vue-awesome-paginate@npm:^1.2.0":
+  version: 1.2.0
+  resolution: "vue-awesome-paginate@npm:1.2.0"
+  dependencies:
+    vue: "npm:^3.4.30"
+  checksum: 10c0/8ad43ffd1ce7e8f2f201c04377d10680b63e166cbee182d55d13ddbe526b742a50816b17c2229f9cb81fa94b06aa21ea013e1ab317d74375310a13163fb2398b
+  languageName: node
+  linkType: hard
+
 "vue-bundle-renderer@npm:^2.1.1":
   version: 2.1.1
   resolution: "vue-bundle-renderer@npm:2.1.1"
@@ -9361,7 +9371,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vue@npm:^3.5.13, vue@npm:latest":
+"vue@npm:^3.4.30, vue@npm:^3.5.13, vue@npm:latest":
   version: 3.5.13
   resolution: "vue@npm:3.5.13"
   dependencies:
