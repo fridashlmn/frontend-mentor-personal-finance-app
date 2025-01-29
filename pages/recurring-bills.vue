@@ -133,10 +133,6 @@ const displayItems = computed(() => {
 </script>
 <style lang="scss">
 @import 'assets/css/variables';
-.avatar {
-  width: 2rem;
-  height: 2rem;
-}
 
 .tableName,
 .tableAmount {

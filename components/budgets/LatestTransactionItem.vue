@@ -4,13 +4,24 @@
       <img
         :src="transaction.avatar"
         alt="avatar"
-        class="avatar me-4 rounded-circle mobileHidden"
+        class="me-4 rounded-circle mobileHidden"
+        :class="small ? 'avatar' : 'avatarBig'"
       />
-      <span class="fs-5 fw-bold">{{ transaction.name }}</span>
+      <span class="fw-bold" :class="small ? 'fs-5' : 'f-4'">
+        {{ transaction.name }}
+      </span>
     </div>
-    <div class="d-flex flex-column fs-5 text-end">
-      <span class="fw-bold mb-1">{{ toCurrency(transaction.amount) }}</span>
-      <span class="text-grey-500">{{ formatDate(transaction.date) }}</span>
+    <div class="d-flex flex-column text-end">
+      <span
+        class="fw-bold text-end mb-1 fs-4"
+        :class="{
+          'colorGreen': transaction.amount > 0 && !!coloredAmount,
+          'fs-5': small,
+        }"
+      >
+        {{ toCurrency(transaction.amount) }}
+      </span>
+      <span class="text-grey-500 fs-5">{{ formatDate(transaction.date) }}</span>
     </div>
   </div>
 </template>
@@ -21,6 +32,8 @@ import { formatDate, toCurrency } from '~/utils/formatter'
 
 interface Props {
   transaction: Transaction
+  coloredAmount?: boolean
+  small?: boolean
 }
 defineProps<Props>()
 </script>

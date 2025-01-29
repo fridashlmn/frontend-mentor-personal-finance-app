@@ -60,7 +60,9 @@
             link-target="/transactions"
             class="me-lg-6 mt-4 mt-md-6"
           >
-            <p>CONTENT</p>
+            <TransactionsOverview
+              :transactions="data.transactions.slice(0, 5)"
+            />
           </OverviewCard>
         </div>
         <div class="gridItem">

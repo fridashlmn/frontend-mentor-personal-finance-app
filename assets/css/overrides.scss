@@ -146,3 +146,17 @@ input[type='search' i]:enabled:read-write:-webkit-any(
     opacity: 15%;
   }
 }
+
+.avatar {
+  width: 2rem;
+  height: 2rem;
+}
+
+.avatarBig {
+  width: 2.5rem;
+  height: 2.5rem;
+}
+
+.colorGreen {
+  color: $green !important;
+}

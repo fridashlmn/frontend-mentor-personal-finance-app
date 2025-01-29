@@ -139,9 +139,6 @@ const displayedPosts = computed(() => {
 </script>
 <style lang="scss">
 @import 'assets/css/variables';
-.colorGreen {
-  color: $green !important;
-}
 
 .colorGrey-500 {
   color: $grey-500 !important;

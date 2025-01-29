@@ -60,7 +60,7 @@
         </template>
         <template #content>
           <div v-for="(transaction, index) in transactions" :key="index">
-            <LatestTransactionItem :transaction="transaction" />
+            <LatestTransactionItem :transaction="transaction" :small="true" />
             <hr
               v-if="index < transactions.length - 1"
               class="lineDark dividerLine"
