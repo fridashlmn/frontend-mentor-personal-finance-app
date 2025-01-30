@@ -4,7 +4,7 @@
       <h1 class="col fw-bold m-0">Transactions</h1>
     </template>
     <template #content>
-      <div class="table-responsive bg-white rounded-3 p-7 mt-6">
+      <div class="table bg-white rounded-3 p-7 mt-5 mt-md-7">
         <nav class="navbar row p-0 justify-content-between">
           <InputField
             class="col"
@@ -137,10 +137,3 @@ const displayedPosts = computed(() => {
     : []
 })
 </script>
-<style lang="scss">
-@import 'assets/css/variables';
-
-.colorGrey-500 {
-  color: $grey-500 !important;
-}
-</style>

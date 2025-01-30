@@ -4,8 +4,8 @@
       <h1 class="col fw-bold m-0">Overview</h1>
     </template>
     <template #content>
-      <div class="row gx-6 my-5 my-md-7 gy-3 gy-md-0">
-        <div class="col">
+      <div class="row gx-6 mt-5 mt-md-7">
+        <div class="col mb-3">
           <OverviewCard
             title="Current Balance"
             variant="small"
@@ -17,20 +17,20 @@
             </span>
           </OverviewCard>
         </div>
-        <div class="col">
+        <div class="col mb-3">
           <OverviewCard class="fs-1 fw-bold" title="Income" variant="small">
             <span>{{ toCurrency(data.balance.income) }}</span>
           </OverviewCard>
         </div>
-        <div class="col">
+        <div class="col mb-7">
           <OverviewCard class="fs-1 fw-bold" title="Expenses" variant="small">
             <span>{{ toCurrency(data.balance.expenses) }}</span>
           </OverviewCard>
         </div>
       </div>
       <div class="gridContainer" id="masonry">
-        <div class="gridSizer"></div>
-        <div class="gridItem">
+        <div class="gridSizer wSmall"></div>
+        <div class="gridItem wBig">
           <OverviewCard
             title="Pots"
             link-label="See Details"
@@ -40,12 +40,12 @@
             <PotOverview :pots="data.pots" />
           </OverviewCard>
         </div>
-        <div class="gridItem">
+        <div class="gridItem wSmall">
           <OverviewCard
             title="Budgets"
             link-label="See Details"
             link-target="/budgets"
-            style="height: 25.625rem"
+            class="mt-4 mt-md-6 mt-lg-0"
           >
             <BudgetOverview
               :budgets="data.budgets"
@@ -109,25 +109,3 @@ onMounted(async () => {
   }
 })
 </script>
-<style>
-.gridContainer {
-  padding-bottom: 4rem;
-}
-.gridContainer:after {
-  content: '';
-  display: block;
-  clear: both;
-}
-.gridSizer,
-.gridItem {
-  width: 50%;
-
-  @media screen and (max-width: 769px) {
-    width: 100%;
-  }
-}
-
-.gridItem {
-  height: fit-content;
-}
-</style>

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="chartOuterContainer">
     <div class="chartCanvas">
       <Doughnut :data="data" :options="options" />
     </div>
@@ -38,13 +38,3 @@ const options = {
   },
 }
 </script>
-<style lang="scss">
-.chartCanvas {
-  position: relative;
-  height: 15rem;
-
-  @media screen and (max-width: 530px) {
-    margin-top: 0;
-  }
-}
-</style>

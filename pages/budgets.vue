@@ -5,9 +5,10 @@
       <button class="col btn btn-primary">+ Add New Budget</button>
     </template>
     <template #content>
-      <div class="row g-6 my-2 my-md-3">
+      <div class="row gx-6 mt-5 mt-md-7">
         <div class="col-lg-5">
           <SpendingSummary
+            class="mb-6"
             :budgets="budgets"
             :current-transactions="currentTransactions"
           />

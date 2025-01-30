@@ -1,8 +1,8 @@
 <template>
-  <div class="col col-lg-4">
-    <div
-      class="row fullHeight gx-6 row-cols-1 row-cols-md-2 row-cols-lg-1 justify-content-between align-content-lg-start"
-    >
+  <div
+    class="row h-100 row-cols-1 row-cols-md-2 row-cols-lg-1 gx-6 justify-content-between align-content-lg-start"
+  >
+    <div>
       <Card background-color="grey-900" variant="responsive" class="col mb-6">
         <template #header>
           <IconRecurringBills class="my-5 me-5 me-md-0" />
@@ -14,6 +14,8 @@
           </div>
         </template>
       </Card>
+    </div>
+    <div>
       <Card variant="extraSmall" class="col mb-6">
         <template #header>
           <span class="fs-3 fw-bold mb-2">Summary</span>
@@ -100,10 +102,3 @@ const dueSoonTotalAmount = computed(() => {
   )
 })
 </script>
-<style lang="scss">
-@import 'assets/css/variables';
-
-.fullHeight {
-  height: 100%;
-}
-</style>

@@ -6,7 +6,7 @@
     </div>
     <div class="dropend">
       <a
-        class="dropdown-toggle"
+        class="dropdownEllipsisToggle"
         type="button"
         data-bs-toggle="dropdown"
         aria-expanded="false"
@@ -33,15 +33,8 @@ interface Props {
 
 defineProps<Props>()
 </script>
-<style lang="scss" scoped>
-.dropdown-toggle::after {
+<style lang="scss">
+.dropdownEllipsisToggle::after {
   border: none !important;
-}
-
-.dot {
-  height: 1rem;
-  width: 1rem;
-  border-radius: 50%;
-  display: inline-block;
 }
 </style>

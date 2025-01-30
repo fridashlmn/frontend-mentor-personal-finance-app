@@ -29,25 +29,3 @@
 <script setup lang="ts">
 import { navigationItems } from '~/content/navigation'
 </script>
-<style lang="scss">
-@import 'assets/css/variables';
-.mobileNavBar {
-  height: $navBar-height-tablet;
-
-  @media screen and (max-width: 530px) {
-    height: $navBar-height-mobile;
-  }
-}
-
-.linkLabel {
-  @media screen and (max-width: 530px) {
-    display: none;
-  }
-}
-
-.linkIcon {
-  @media screen and (max-width: 530px) {
-    margin-bottom: 0.625rem !important;
-  }
-}
-</style>

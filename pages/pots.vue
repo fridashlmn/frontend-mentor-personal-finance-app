@@ -5,9 +5,10 @@
       <button class="col btn btn-primary">+ Add New Pot</button>
     </template>
     <template #content>
-      <div class="row row-cols-1 row-cols-lg-2 g-6 my-2 my-md-3">
+      <div class="row row-cols-1 row-cols-lg-2 gx-6 mt-5 mt-md-7">
         <div v-for="(item, index) in pots" :key="index" class="col">
           <PotItem
+            class="mb-6"
             :name="item.name"
             :target="item.target"
             :total="item.total"

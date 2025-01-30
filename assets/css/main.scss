@@ -5,6 +5,7 @@
 @import 'global';
 @import url('https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,100..900;1,100..900&display=swap');
 @import 'variables';
+@import 'classes';
 $sizes: ();
 
 // BOOTSTRAP DEFAULTS
@@ -77,5 +78,5 @@ $utilities: map-merge(
   )
 );
 @import 'bootstrap/scss/utilities/api';
-@import 'overrides';
+@import 'bootstrapOverrides';
 @import 'vue-awesome-paginate/dist/style.css';

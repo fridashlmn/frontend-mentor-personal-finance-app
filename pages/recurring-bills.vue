@@ -4,63 +4,62 @@
       <h1 class="col fw-bold m-0">Recurring Bills</h1>
     </template>
     <template #content>
-      <div class="row row-cols-1 row-cols-lg-2 my-5 my-md-7 gx-6">
-        <RecurringBillsSummary
-          :recurring-bills="recurringBills"
-          :paid-bills="paidBills"
-          :total-upcoming="totalUpcoming"
-          :due-soon="dueSoon"
-        />
-        <div class="col col-lg-8 table-responsive bg-white rounded-3 p-7">
-          <nav class="navbar row p-0 justify-content-between">
-            <InputField
-              class="col"
-              placeholder="Search bills"
-              type="search"
-              :icon="IconSearch"
-              style="max-width: 20rem"
-            />
-            <SelectDropdown
-              class="col"
-              :select-items="filterItems"
-              helper-message="Sort by"
-            />
-          </nav>
-          <DataTable
-            class="mt-6"
-            :table-head="tableHead"
-            :data="recurringBills"
-          >
-            <tr v-for="item in displayItems" :key="item.date">
-              <td class="tableName">
-                <img
-                  :src="item.avatar"
-                  alt="avatar"
-                  class="avatar me-4 rounded-circle"
-                />
-                {{ item.name }}
-                <div
-                  v-if="viewport.isLessThan('tablet')"
-                  class="mobileDate"
+      <div class="row gx-6 mt-5 mt-md-7">
+        <div class="col-lg-4">
+          <RecurringBillsSummary
+            :recurring-bills="recurringBills"
+            :paid-bills="paidBills"
+            :total-upcoming="totalUpcoming"
+            :due-soon="dueSoon"
+          />
+        </div>
+        <div class="col-lg-8">
+          <div class="table bg-white rounded-3 p-7">
+            <nav class="navbar row p-0 justify-content-between">
+              <InputField
+                class="col"
+                placeholder="Search bills"
+                type="search"
+                :icon="IconSearch"
+              />
+              <SelectDropdown
+                class="col"
+                :select-items="filterItems"
+                helper-message="Sort by"
+              />
+            </nav>
+            <DataTable class="mt-6" :table-head="tableHead">
+              <tr v-for="item in displayItems" :key="item.date">
+                <td class="fw-bold fs-4 align-md-middle align-bottom">
+                  <img
+                    :src="item.avatar"
+                    alt="avatar"
+                    class="avatar me-4 rounded-circle"
+                  />
+                  {{ item.name }}
+                  <div
+                    v-if="viewport.isLessThan('tablet')"
+                    class="fw-normal fs-5 mt-2"
+                    :style="`color:${item.theme}`"
+                  >
+                    Monthly-{{ formatDay(item.date) }}
+                    <component v-if="item.icon" :is="item.icon" class="ms-2" />
+                  </div>
+                </td>
+                <td
+                  v-if="viewport.isGreaterOrEquals('tablet')"
+                  class="fs-5 align-middle"
                   :style="`color:${item.theme}`"
                 >
                   Monthly-{{ formatDay(item.date) }}
                   <component v-if="item.icon" :is="item.icon" class="ms-2" />
-                </div>
-              </td>
-              <td
-                v-if="viewport.isGreaterOrEquals('tablet')"
-                class="tableDate"
-                :style="`color:${item.theme}`"
-              >
-                Monthly-{{ formatDay(item.date) }}
-                <component v-if="item.icon" :is="item.icon" class="ms-2" />
-              </td>
-              <td class="tableAmount">
-                {{ toCurrency(item.amount) }}
-              </td>
-            </tr>
-          </DataTable>
+                </td>
+                <td class="fw-bold fs-4 align-md-middle align-bottom">
+                  {{ toCurrency(item.amount) }}
+                </td>
+              </tr>
+            </DataTable>
+          </div>
         </div>
       </div>
     </template>
@@ -131,32 +130,3 @@ const displayItems = computed(() => {
   return [...paidBills.value, ...dueSoon.value, ...totalUpcoming.value]
 })
 </script>
-<style lang="scss">
-@import 'assets/css/variables';
-
-.tableName,
-.tableAmount {
-  font-weight: bold;
-  font-size: $preset-4;
-  vertical-align: middle;
-
-  @media screen and (max-width: 530px) {
-    vertical-align: bottom;
-  }
-}
-
-.tableDate {
-  font-size: $preset-5;
-  vertical-align: middle;
-
-  @media screen and (max-width: 530px) {
-    vertical-align: middle;
-  }
-}
-
-.mobileDate {
-  font-weight: normal;
-  font-size: $preset-5;
-  margin-top: 0.5rem;
-}
-</style>

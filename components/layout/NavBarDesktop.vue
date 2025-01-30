@@ -1,11 +1,13 @@
 <template>
   <nav
-    class="sidebar rounded-end-4 bg-grey-900 min-vh-100 d-flex flex-column justify-content-between align-items-baseline pb-6"
+    class="desktopSidebar rounded-end-4 bg-grey-900 testContainer d-flex flex-column justify-content-between align-items-baseline pb-6"
   >
     <div :class="!isMenuCollapsed ? 'w-100' : ''">
       <div class="pt-8 pb-8 px-7">
-        <LogoSmall v-if="isMenuCollapsed" />
-        <LogoLarge v-else />
+        <NuxtLink to="/">
+          <LogoSmall v-if="isMenuCollapsed" />
+          <LogoLarge v-else />
+        </NuxtLink>
       </div>
       <ul class="nav flex-column justify-content-start pt-6 me-6">
         <li v-for="item in navigationItems" :key="item.label" class="link-item">
@@ -44,7 +46,7 @@ import { navigationItems } from '~/content/navigation'
 const isMenuCollapsed = ref<boolean>(false)
 
 function toggleSidebar(): void {
-  const sidebar: Element | null = document.querySelector('.sidebar')
+  const sidebar: Element | null = document.querySelector('.desktopSidebar')
   sidebar?.classList.toggle('collapsed')
   if (isMenuCollapsed.value) {
     setTimeout(() => {
@@ -55,44 +57,3 @@ function toggleSidebar(): void {
   }
 }
 </script>
-<style lang="scss">
-@import 'assets/css/variables';
-body {
-  overflow-x: hidden;
-}
-
-.sidebar {
-  width: $sidebar-width;
-  height: 100vh;
-  transition: all 0.3s ease;
-}
-
-.sidebar.collapsed {
-  width: $sidebar-width-collapsed !important;
-}
-
-.btn-link:hover {
-  color: $grey-100 !important;
-
-  svg {
-    path {
-      fill: $grey-100 !important;
-    }
-  }
-}
-
-.collapsed .rotateSvg {
-  transform: rotate(180deg);
-}
-
-.activeClass {
-  background-color: $beige-100;
-  color: $grey-900 !important;
-
-  svg {
-    path {
-      fill: $green !important;
-    }
-  }
-}
-</style>

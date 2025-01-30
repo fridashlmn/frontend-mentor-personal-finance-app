@@ -1,6 +1,8 @@
 <template>
-  <div class="row">
-    <DoughnutChart class="col-8" :data="chartData">
+  <div
+    class="d-flex flex-column flex-md-row align-items-center justify-content-around mt-7 mb-2"
+  >
+    <DoughnutChart :data="chartData">
       <div
         class="innerCircle d-flex flex-column align-items-center justify-content-center"
       >
@@ -12,8 +14,18 @@
         </span>
       </div>
     </DoughnutChart>
-    <div class="col-4 mt-8">
-      <DataLegend :data="legendData" variant="vertical" />
+    <div :class="{ 'w-100': viewport.isLessThan('tablet') }">
+      <div
+        class="mt-4"
+        :class="{
+          'row row-cols-2 g-0 w-100': viewport.isLessThan('tablet'),
+        }"
+      >
+        <DataLegend
+          :data="legendData"
+          :variant="viewport.isLessThan('tablet') ? 'horizontal' : 'vertical'"
+        />
+      </div>
     </div>
   </div>
 </template>
@@ -30,6 +42,9 @@ import { computed } from 'vue'
 import { globalToday } from '~/content/date'
 import { toCurrency } from '~/utils/formatter'
 import DataLegend from '~/components/layout/DataLegend.vue'
+
+// eslint-disable-next-line no-undef
+const viewport = useViewport()
 
 interface Props {
   budgets: Budget[]

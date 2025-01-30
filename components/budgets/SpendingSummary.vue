@@ -4,7 +4,7 @@
       <div
         class="d-flex flex-column flex-md-row flex-lg-column align-items-center"
       >
-        <DoughnutChart :data="chartData" style="height: 280px">
+        <DoughnutChart :data="chartData" class="me-md-7 me-lg-0">
           <div
             class="innerCircle d-flex flex-column align-items-center justify-content-center"
           >
@@ -16,7 +16,7 @@
             </span>
           </div>
         </DoughnutChart>
-        <div style="width: 100%" class="ms-md-4">
+        <div class="mt-7 mt-md-0 mt-lg-7 ms-md-7 ms-lg-0 w-100">
           <span class="fs-2 fw-bold">Spending Summary</span>
           <div
             v-for="(budget, index) in budgets"

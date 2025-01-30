@@ -21,26 +21,3 @@ defineProps<Props>()
 // eslint-disable-next-line no-undef
 const viewport = useViewport()
 </script>
-<style lang="scss">
-@import 'assets/css/variables';
-.table > .tHead > * > * {
-  color: $grey-500;
-  padding: 0.75rem 0;
-  font-size: $preset-5;
-  font-weight: normal;
-
-  &:first-of-type {
-    padding-left: 0.75rem;
-  }
-
-  &:last-of-type {
-    padding-right: 0.75rem;
-    text-align: end;
-  }
-}
-
-.table > .tBody > * > * {
-  color: $grey-900;
-  padding: 1.25rem 0;
-}
-</style>

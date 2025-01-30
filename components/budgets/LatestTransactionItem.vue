@@ -37,10 +37,3 @@ interface Props {
 }
 defineProps<Props>()
 </script>
-<style lang="scss">
-.mobileHidden {
-  @media screen and (max-width: 530px) {
-    display: none;
-  }
-}
-</style>

@@ -39,25 +39,3 @@ function clearField(): void {
   input.value = ''
 }
 </script>
-<style lang="scss">
-.formContainer {
-  min-width: 13.438rem;
-}
-
-.inputClass {
-  position: relative;
-}
-
-.iconContainer {
-  position: absolute;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0 auto;
-  top: 32%;
-  right: 9%;
-  width: 1rem;
-  height: 1rem;
-  cursor: pointer;
-}
-</style>

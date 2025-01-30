@@ -99,9 +99,3 @@ const percent = computed(() => {
   return ((amountSpent.value / props.budget.maximum) * 100).toFixed(1)
 })
 </script>
-<style lang="scss">
-.progressbarLarge {
-  --bs-progress-height: 1.5rem;
-  width: 100%;
-}
-</style>
