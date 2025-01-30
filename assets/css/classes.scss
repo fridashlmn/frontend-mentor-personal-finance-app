@@ -101,7 +101,6 @@
 }
 
 .formContainer {
-  min-width: 13.438rem;
   .inputClass {
     position: relative;
   }
@@ -188,5 +187,13 @@
   }
   li:has(> .next-button) {
     margin-left: auto;
+  }
+}
+
+.iconDark {
+  svg {
+    path {
+      fill: $grey-900;
+    }
   }
 }

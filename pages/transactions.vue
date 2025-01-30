@@ -7,12 +7,14 @@
       <div class="table bg-white rounded-3 p-7 mt-5 mt-md-7">
         <nav class="navbar row p-0 justify-content-between">
           <InputField
-            class="col"
+            class="col col-md-3 col-lg-4"
             placeholder="Search transaction"
             type="search"
             :icon="IconSearch"
           />
-          <div class="col d-flex justify-content-end align-items-center">
+          <div
+            class="col col-md-9 col-lg-8 d-flex justify-content-end align-items-center"
+          >
             <SelectDropdown
               :select-items="sortFilterItems"
               helper-message="Sort by"
@@ -127,10 +129,10 @@ const categoryFilterItems: { id: number; label: string }[] = [
   { id: 5, label: 'Dining Out' },
   { id: 6, label: 'Transportation' },
   { id: 7, label: 'Personal Care' },
-  { id: 7, label: 'Education' },
-  { id: 7, label: 'Lifecycle' },
-  { id: 7, label: 'Shopping' },
-  { id: 7, label: 'General' },
+  { id: 8, label: 'Education' },
+  { id: 9, label: 'Lifecycle' },
+  { id: 10, label: 'Shopping' },
+  { id: 11, label: 'General' },
 ]
 
 const displayedPosts = computed(() => {

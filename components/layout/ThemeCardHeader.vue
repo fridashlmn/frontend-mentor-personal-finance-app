@@ -6,7 +6,7 @@
     </div>
     <div class="dropstart">
       <a
-        class="dropdownEllipsisToggle"
+        class="dropdown-toggle"
         type="button"
         data-bs-toggle="dropdown"
         aria-expanded="false"
@@ -33,8 +33,3 @@ interface Props {
 
 defineProps<Props>()
 </script>
-<style lang="scss">
-.dropdownEllipsisToggle::after {
-  border: none !important;
-}
-</style>
