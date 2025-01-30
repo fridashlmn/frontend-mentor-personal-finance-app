@@ -10,7 +10,7 @@
         </NuxtLink>
       </div>
       <ul class="nav flex-column justify-content-start pt-6 me-6">
-        <li v-for="item in navigationItems" :key="item.label" class="link-item">
+        <li v-for="item in navigationItems" :key="item.label">
           <NuxtLink
             :to="item.link"
             class="d-flex px-7 pt-4 pb-4 align-items-center text-beige-100 fw-bold text-decoration-none h-6"

@@ -101,29 +101,30 @@ function handleSelect(selected: { id: number; label: string }): void {
   font-size: $preset-4;
   color: $grey-900;
   max-width: max-content;
-
   .innerContainer {
     display: flex;
     align-items: center;
-
     .helperMessage {
       width: 100%;
       text-align: end;
       margin-right: 8px;
       color: $grey-500;
     }
-
     .selectButton {
       width: 100%;
       font-size: $preset-4;
       background-color: transparent;
       padding: 0.75rem 1.25rem;
-      border: 1px solid #caced1;
+      border: 1px solid $beige-500;
       border-radius: 0.25rem;
       cursor: pointer;
       display: flex;
       justify-content: space-between;
       align-items: center;
+
+      &:hover {
+        border-color: $grey-900;
+      }
 
       .selectedValue {
         width: max-content;
@@ -205,14 +206,15 @@ function handleSelect(selected: { id: number; label: string }): void {
     left: -3rem;
     margin-top: 0.5rem;
   }
-}
 
-.customSelect.active .selectDropdown {
-  opacity: 1;
-  visibility: visible;
-}
-
-.customSelect.active .arrow {
-  transform: rotate(180deg);
+  &.active {
+    .selectDropdown {
+      opacity: 1;
+      visibility: visible;
+    }
+    .arrow {
+      transform: rotate(180deg);
+    }
+  }
 }
 </style>

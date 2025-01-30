@@ -127,6 +127,10 @@ const categoryFilterItems: { id: number; label: string }[] = [
   { id: 5, label: 'Dining Out' },
   { id: 6, label: 'Transportation' },
   { id: 7, label: 'Personal Care' },
+  { id: 7, label: 'Education' },
+  { id: 7, label: 'Lifecycle' },
+  { id: 7, label: 'Shopping' },
+  { id: 7, label: 'General' },
 ]
 
 const displayedPosts = computed(() => {

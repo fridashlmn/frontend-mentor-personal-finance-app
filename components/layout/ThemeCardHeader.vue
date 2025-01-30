@@ -4,7 +4,7 @@
       <span class="dot me-4" :style="`background-color: ${theme}`"></span>
       <span class="fs-2 fw-bold">{{ title }}</span>
     </div>
-    <div class="dropend">
+    <div class="dropstart">
       <a
         class="dropdownEllipsisToggle"
         type="button"

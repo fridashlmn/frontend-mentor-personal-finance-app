@@ -51,8 +51,11 @@
           <div class="d-flex align-items-center justify-content-between">
             <span class="fs-3 fw-bold">Latest Spending</span>
             <div>
-              <NuxtLink to="/transactions" class="text-decoration-none">
-                <span class="fs-4 text-grey-500 me-4">See All</span>
+              <NuxtLink
+                to="/transactions"
+                class="btn-dark text-decoration-none d-flex align-items-center"
+              >
+                <span class="fs-4 me-4">See All</span>
                 <IconCaretRight />
               </NuxtLink>
             </div>

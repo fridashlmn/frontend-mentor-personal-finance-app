@@ -78,7 +78,13 @@
     }
   }
 }
-
+.activeClass {
+  background-color: $beige-100;
+  color: $grey-900 !important;
+  path {
+    fill: $green !important;
+  }
+}
 .desktopSidebar {
   width: $sidebar-width;
   transition: all 0.3s ease;
@@ -90,22 +96,6 @@
 
     .rotateSvg {
       transform: rotate(180deg);
-    }
-  }
-  .btn-link:hover {
-    color: $grey-100 !important;
-    svg {
-      path {
-        fill: $grey-100 !important;
-      }
-    }
-  }
-  .activeClass {
-    background-color: $beige-100;
-    color: $grey-900 !important;
-
-    path {
-      fill: $green !important;
     }
   }
 }

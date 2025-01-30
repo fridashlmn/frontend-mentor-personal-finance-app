@@ -1,11 +1,11 @@
 <template>
   <ul
-    class="mobileNavBar fixed-bottom bg-grey-900 rounded-top-3 nav row g-0 align-items-end justify-content-around h-100"
+    class="mobileNavBar fixed-bottom bg-grey-900 rounded-top-3 nav row g-0 align-items-end justify-content-around px-4"
   >
     <li
       v-for="item in navigationItems"
       :key="item.label"
-      class="col link-item"
+      class="col"
       style="max-width: 6.5rem"
     >
       <NuxtLink

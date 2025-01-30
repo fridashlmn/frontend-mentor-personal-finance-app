@@ -21,7 +21,8 @@ body {
   border: 1px solid $beige-500;
   box-shadow: none;
 }
-.form-control:focus {
+.form-control:focus,
+.form-control:hover {
   background-color: transparent;
   border: 1px solid $grey-900;
   outline: 0;
@@ -110,6 +111,11 @@ input[type='search' i]:enabled:read-write:-webkit-any(
   &:hover {
     color: $grey-900 !important;
     background-color: transparent;
+    svg {
+      path {
+        fill: $grey-900 !important;
+      }
+    }
   }
   &:active {
     color: $grey-500 !important;
@@ -136,5 +142,14 @@ input[type='search' i]:enabled:read-write:-webkit-any(
     background-color: $red !important;
     opacity: 100%;
     box-shadow: none;
+  }
+}
+
+.btn-link:hover {
+  color: $grey-100 !important;
+  svg {
+    path {
+      fill: $grey-100 !important;
+    }
   }
 }
