@@ -9,6 +9,9 @@
     display: none;
   }
 }
+.nowrap {
+  white-space: nowrap;
+}
 
 .dot {
   height: 1rem;
@@ -103,6 +106,14 @@
 .formContainer {
   .inputClass {
     position: relative;
+    .inputWithPrefix {
+      padding-left: 2.5rem;
+    }
+  }
+  .inputPrefix {
+    position: absolute;
+    top: 26%;
+    left: 4%;
   }
   .iconContainer {
     position: absolute;
@@ -111,7 +122,7 @@
     justify-content: center;
     margin: 0 auto;
     top: 32%;
-    right: 9%;
+    right: 3.5%;
     width: 1rem;
     height: 1rem;
     cursor: pointer;

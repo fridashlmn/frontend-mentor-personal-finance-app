@@ -22,16 +22,19 @@ $grey-300: #b3b3b3;
 $grey-100: #f2f2f2;
 $green: #277c78;
 $yellow: #f2cdac;
+$cyan: #82c9d7;
 $navy: #626070;
 $red: #c94736;
 $purple: #af81ba;
 $turquoise: #597c7c;
+$brown: #93674F;
 $magenta: #934f6f;
 $blue: #3f82b2;
+$navy-grey: #97A0AC;
 $army-green: #7f9161;
+$orange: #BE6C49;
 $gold: #cab361;
 $white: #ffffff;
-$cyan: #82c9d7;
 
 $colors: (
   'beige-500': $beige-500,
@@ -109,3 +112,13 @@ $table-border-color: $grey-100;
 
 $input-placeholder-color: $beige-500;
 $input-font-size: $preset-4;
+
+$modal-content-bg: $white;
+$modal-md: 35rem;
+$modal-padding: 0;
+$modal-header-padding: 0;
+$modal-footer-gap: 0;
+$modal-header-padding-x: 0;
+$modal-header-padding-y: 0;
+$modal-inner-padding: 0;
+$modal-footer-margin-between: 0;

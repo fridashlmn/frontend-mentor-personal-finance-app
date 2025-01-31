@@ -2,7 +2,13 @@
   <Container>
     <template #header>
       <h1 class="col fw-bold m-0">Budgets</h1>
-      <button class="col btn btn-primary">+ Add New Budget</button>
+      <button
+        class="col btn btn-primary"
+        data-bs-toggle="modal"
+        data-bs-target="#addNewBudgetModal"
+      >
+        + Add New Budget
+      </button>
     </template>
     <template #content>
       <div class="row gx-6 mt-5 mt-md-7">
@@ -23,6 +29,28 @@
           </div>
         </div>
       </div>
+      <!--MODAL-->
+      <div>
+        <div
+          class="modal fade"
+          id="addNewBudgetModal"
+          tabindex="-1"
+          aria-hidden="true"
+        >
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <ModalContent
+                title="Add New Budget"
+                button-label="Add Budget"
+                sub-line="Choose a category to set a spending budget. These categories can help you monitor spending."
+                :bugets="budgets"
+              >
+                <BudgetForm :budgets="budgets" />
+              </ModalContent>
+            </div>
+          </div>
+        </div>
+      </div>
     </template>
   </Container>
 </template>
@@ -34,6 +62,8 @@ import { globalToday } from '~/content/date'
 import SpendingSummary from '~/components/budgets/SpendingSummary.vue'
 import CategoryItem from '~/components/budgets/CategoryItem.vue'
 import type { Transaction } from '~/@types/types'
+import ModalContent from '~/components/layout/ModalContent.vue'
+import BudgetForm from '~/components/budgets/BudgetForm.vue'
 
 const today = globalToday.getDate()
 const thisMonth = globalToday.getMonth()

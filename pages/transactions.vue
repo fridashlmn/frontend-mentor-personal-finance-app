@@ -16,14 +16,14 @@
             class="col col-md-9 col-lg-8 d-flex justify-content-end align-items-center"
           >
             <SelectDropdown
-              :select-items="selectItemsSort"
+              :select-items="selectSorting"
               helper-message="Sort by"
               icon="sort"
               @select="sortTransactions"
             />
             <SelectDropdown
               class="ms-6"
-              :select-items="selectItemsFilter"
+              :select-items="selectCategoriesWithAll"
               helper-message="Category"
               icon="filter"
               @select="filterTransactions"
@@ -103,6 +103,7 @@ import { transactions } from '~/content/data.json'
 import type { SortOption } from '~/@types/types'
 import { ref, computed } from 'vue'
 import Pagination from '~/components/layout/Pagination.vue'
+import { selectCategoriesWithAll, selectSorting } from '~/content/selects'
 // eslint-disable-next-line no-undef
 const viewport = useViewport()
 const displayCurrentPage = ref(1)
@@ -114,29 +115,6 @@ const tableHead: string[] = [
   'Category',
   'Transaction Date',
   'Amount',
-]
-
-const selectItemsSort: SortOption[] = [
-  { id: 1, label: 'Latest', direction: 'desc', sortBy: 'date' },
-  { id: 2, label: 'Oldest', direction: 'asc', sortBy: 'date' },
-  { id: 3, label: 'A to Z', direction: 'asc', sortBy: 'name' },
-  { id: 4, label: 'Z to A', direction: 'desc', sortBy: 'name' },
-  { id: 5, label: 'Highest', direction: 'desc', sortBy: 'amount' },
-  { id: 6, label: 'Lowest', direction: 'asc', sortBy: 'amount' },
-]
-
-const selectItemsFilter: { id: number; label: string }[] = [
-  { id: 1, label: 'All Transactions' },
-  { id: 2, label: 'Entertainment' },
-  { id: 3, label: 'Bills' },
-  { id: 4, label: 'Groceries' },
-  { id: 5, label: 'Dining Out' },
-  { id: 6, label: 'Transportation' },
-  { id: 7, label: 'Personal Care' },
-  { id: 8, label: 'Education' },
-  { id: 9, label: 'Lifecycle' },
-  { id: 10, label: 'Shopping' },
-  { id: 11, label: 'General' },
 ]
 
 const displayedPosts = computed(() => {

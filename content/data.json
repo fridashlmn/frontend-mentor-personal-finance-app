@@ -402,17 +402,17 @@
     {
       "category": "Entertainment",
       "maximum": 50.0,
-      "theme": "#277C78"
+      "theme": "#277c78"
     },
     {
       "category": "Bills",
       "maximum": 750.0,
-      "theme": "#82C9D7"
+      "theme": "#82c9d7"
     },
     {
       "category": "Dining Out",
       "maximum": 75.0,
-      "theme": "#F2CDAC"
+      "theme": "#f2cdac"
     },
     {
       "category": "Personal Care",

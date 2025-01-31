@@ -6,15 +6,19 @@
     >
       {{ helperMessage }}
     </span>
-    <div class="btn-group dropstart">
+    <div class="btn-group d-flex flex-column" :class="dropdownDirection">
+      <span class="fs-5 fw-bold text-grey-500 mb-1">{{ label }}</span>
       <button
-        v-if="viewport.isGreaterOrEquals('tablet')"
-        class="btn btn-info dropdown-toggle with"
+        v-if="viewport.isGreaterOrEquals('tablet') || !icon"
+        class="btn btn-info dropdown-toggle with d-flex align-items-center justify-content-between"
         type="button"
         data-bs-toggle="dropdown"
         aria-expanded="false"
       >
-        <span class="me-4">{{ selectedItem.label }}</span>
+        <span class="d-flex">
+          <slot name="dropdownButtonPrefix" :theme="selectedItem.theme" />
+          <span class="me-4">{{ selectedItem.label }}</span>
+        </span>
         <IconCaretDown class="align-middle iconDark" />
       </button>
       <div
@@ -27,16 +31,23 @@
         <IconSort v-if="icon === 'sort'" />
         <IconFilter v-if="icon === 'filter'" />
       </div>
-      <ul class="dropdown-menu">
-        <li v-for="item in selectItems" :key="item.id">
-          <a
-            class="dropdown-item"
-            :class="{ active: item.id === selectedItem.id }"
-            @click="handleSelect(item)"
-          >
-            {{ item.label }}
-          </a>
-          <hr v-if="item.id < selectItems.length" class="divider" />
+      <ul class="dropdown-menu w-100">
+        <li v-for="(item, index) in selectItems" :key="item.id">
+          <span class="d-flex align-items-center">
+            <slot name="dropdownItemPrefix" :theme="item.theme" />
+            <a
+              class="dropdown-item"
+              :class="{
+                active: item.id === selectedItem.id,
+                disabled: item.disabled,
+              }"
+              @click="handleSelect(item)"
+            >
+              {{ item.label }}
+            </a>
+            <slot v-if="item.disabled" name="dropdownItemSuffix" />
+          </span>
+          <hr v-if="index < selectItems.length - 1" class="divider" />
         </li>
       </ul>
     </div>
@@ -53,8 +64,12 @@ interface Props {
   selectItems: { id: number; label: string }[]
   helperMessage?: string
   icon?: 'sort' | 'filter'
+  label?: string
+  dropdownDirection?: string
 }
-const props = defineProps<Props>()
+const props = withDefaults(defineProps<Props>(), {
+  dropdownDirection: 'dropstart',
+})
 const emit = defineEmits(['select'])
 // eslint-disable-next-line no-undef
 const viewport = useViewport()
@@ -62,6 +77,7 @@ const viewport = useViewport()
 const selectedItem = ref({
   id: props.selectItems[0].id,
   label: props.selectItems[0].label,
+  theme: props.selectItems[0].theme,
 })
 
 function handleSelect(item: { id: number; label: string }): void {
