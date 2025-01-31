@@ -55,7 +55,7 @@ interface Props {
   icon?: 'sort' | 'filter'
 }
 const props = defineProps<Props>()
-
+const emit = defineEmits(['select'])
 // eslint-disable-next-line no-undef
 const viewport = useViewport()
 
@@ -66,5 +66,6 @@ const selectedItem = ref({
 
 function handleSelect(item: { id: number; label: string }): void {
   selectedItem.value = item
+  emit('select', selectedItem.value)
 }
 </script>

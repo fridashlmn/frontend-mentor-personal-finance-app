@@ -43,3 +43,10 @@ export interface Legend {
   label: string
   value: string
 }
+
+export interface SortOption {
+  id: number
+  label: string
+  direction: string
+  sortBy: string
+}

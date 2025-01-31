@@ -16,15 +16,17 @@
             class="col col-md-9 col-lg-8 d-flex justify-content-end align-items-center"
           >
             <SelectDropdown
-              :select-items="sortFilterItems"
+              :select-items="selectItemsSort"
               helper-message="Sort by"
               icon="sort"
+              @select="sortTransactions"
             />
             <SelectDropdown
               class="ms-6"
-              :select-items="categoryFilterItems"
+              :select-items="selectItemsFilter"
               helper-message="Category"
               icon="filter"
+              @select="filterTransactions"
             />
           </div>
         </nav>
@@ -81,7 +83,7 @@
           </template>
         </DataTable>
         <Pagination
-          :total-items="transactions.length"
+          :total-items="sortedTransactions.length"
           :items-per-page="10"
           :max-pages-shown="5"
           v-model="displayCurrentPage"
@@ -98,11 +100,13 @@ import InputField from '~/components/layout/InputField.vue'
 import IconSearch from '~/assets/images/icon-search.svg?component'
 import { formatDate, toCurrency } from '~/utils/formatter'
 import { transactions } from '~/content/data.json'
+import type { SortOption } from '~/@types/types'
 import { ref, computed } from 'vue'
 import Pagination from '~/components/layout/Pagination.vue'
 // eslint-disable-next-line no-undef
 const viewport = useViewport()
 const displayCurrentPage = ref(1)
+const sortedTransactions = ref(transactions)
 const itemsPerPage = 10
 
 const tableHead: string[] = [
@@ -112,16 +116,16 @@ const tableHead: string[] = [
   'Amount',
 ]
 
-const sortFilterItems: { id: number; label: string }[] = [
-  { id: 1, label: 'Latest' },
-  { id: 2, label: 'Oldest' },
-  { id: 3, label: 'A to Z' },
-  { id: 4, label: 'Z to A' },
-  { id: 5, label: 'Highest' },
-  { id: 6, label: 'Lowest' },
+const selectItemsSort: SortOption[] = [
+  { id: 1, label: 'Latest', direction: 'desc', sortBy: 'date' },
+  { id: 2, label: 'Oldest', direction: 'asc', sortBy: 'date' },
+  { id: 3, label: 'A to Z', direction: 'asc', sortBy: 'name' },
+  { id: 4, label: 'Z to A', direction: 'desc', sortBy: 'name' },
+  { id: 5, label: 'Highest', direction: 'desc', sortBy: 'amount' },
+  { id: 6, label: 'Lowest', direction: 'asc', sortBy: 'amount' },
 ]
 
-const categoryFilterItems: { id: number; label: string }[] = [
+const selectItemsFilter: { id: number; label: string }[] = [
   { id: 1, label: 'All Transactions' },
   { id: 2, label: 'Entertainment' },
   { id: 3, label: 'Bills' },
@@ -138,8 +142,38 @@ const categoryFilterItems: { id: number; label: string }[] = [
 const displayedPosts = computed(() => {
   const startIndex = (displayCurrentPage.value - 1) * itemsPerPage
   const endIndex = startIndex + itemsPerPage
-  return Array.isArray(transactions)
-    ? transactions.slice(startIndex, endIndex)
+  return Array.isArray(sortedTransactions.value)
+    ? sortedTransactions.value.slice(startIndex, endIndex)
     : []
 })
+
+function filterTransactions(selectedItem: { id: number; label: string }) {
+  if (selectedItem.label === 'All Transactions') {
+    sortedTransactions.value = transactions
+  } else {
+    sortedTransactions.value = transactions.filter(
+      (transaction) => transaction.category === selectedItem.label,
+    )
+  }
+}
+
+function sortTransactions(selectedItem: SortOption) {
+  if (selectedItem.direction === 'asc') {
+    sortedTransactions.value.sort((a, b) =>
+      a[selectedItem.sortBy] == b[selectedItem.sortBy]
+        ? 0
+        : a[selectedItem.sortBy] < b[selectedItem.sortBy]
+          ? -1
+          : 1,
+    )
+  } else if (selectedItem.direction === 'desc') {
+    sortedTransactions.value.sort((a, b) =>
+      a[selectedItem.sortBy] == b[selectedItem.sortBy]
+        ? 0
+        : a[selectedItem.sortBy] < b[selectedItem.sortBy]
+          ? 1
+          : -1,
+    )
+  }
+}
 </script>

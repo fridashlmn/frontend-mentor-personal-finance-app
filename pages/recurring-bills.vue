@@ -26,10 +26,11 @@
                 class="col col-md-9 col-lg-8 d-flex justify-content-end align-items-center"
                 :select-items="filterItems"
                 helper-message="Sort by"
+                @select="sortTransactions"
               />
             </nav>
             <DataTable class="mt-6" :table-head="tableHead">
-              <tr v-for="item in displayItems" :key="item.date">
+              <tr v-for="(item, index) in sortedItems" :key="index">
                 <td class="fw-bold fs-4 align-md-middle align-bottom">
                   <img
                     :src="item.avatar"
@@ -72,61 +73,90 @@ import SelectDropdown from '~/components/layout/SelectDropdown.vue'
 import IconSearch from '~/assets/images/icon-search.svg?component'
 import IconDue from '~/assets/images/icon-bill-due.svg?component'
 import IconPaid from '~/assets/images/icon-bill-paid.svg?component'
-import { computed } from 'vue'
+import { ref } from 'vue'
 import DataTable from '~/components/layout/DataTable.vue'
 import { formatDay, toCurrency } from '~/utils/formatter'
 import Container from '~/components/layout/Container.vue'
 import RecurringBillsSummary from '~/components/recurringBills/RecurringBillsSummary.vue'
 import { globalToday } from '~/content/date'
+import type { SortOption } from '~/@types/types'
 
 // eslint-disable-next-line no-undef
 const viewport = useViewport()
 
-const filterItems: { id: number; label: string }[] = [
-  { id: 1, label: 'Latest' },
-  { id: 2, label: 'Oldest' },
-  { id: 3, label: 'A to Z' },
-  { id: 4, label: 'Z to A' },
-  { id: 5, label: 'Highest' },
-  { id: 6, label: 'Lowest' },
+const filterItems: SortOption[] = [
+  { id: 1, label: 'Latest', direction: 'asc', sortBy: 'date' },
+  { id: 2, label: 'Oldest', direction: 'desc', sortBy: 'date' },
+  { id: 3, label: 'A to Z', direction: 'asc', sortBy: 'name' },
+  { id: 4, label: 'Z to A', direction: 'desc', sortBy: 'name' },
+  { id: 5, label: 'Highest', direction: 'asc', sortBy: 'amount' },
+  { id: 6, label: 'Lowest', direction: 'desc', sortBy: 'amount' },
 ]
 
 const tableHead: string[] = ['Bill Title', 'Due Date', 'Amount']
 const today = globalToday.getDate()
 
-const recurringBills = computed(() => {
-  return transactions
-    .filter((transaction) => transaction.recurring)
-    .sort((a, b) => new Date(a.date).getDate() - new Date(b.date).getDate())
-    .filter(
-      (value, index, self) =>
-        index === self.findIndex((t) => t.name === value.name),
+const recurringBills = transactions
+  .filter((transaction) => transaction.recurring)
+  .filter(
+    (value, index, self) =>
+      index === self.findIndex((t) => t.name === value.name),
+  )
+  .sort((a, b) => new Date(a.date).getDate() - new Date(b.date).getDate())
+const paidBills = recurringBills
+  .filter((transaction) => new Date(transaction.date).getDate() < today)
+  .map((obj) => ({ ...obj, theme: '#277c78', icon: IconPaid }))
+const dueSoon = recurringBills
+  .filter(
+    (transaction) =>
+      new Date(transaction.date).getDate() > today &&
+      new Date(transaction.date).getDate() - today < 7,
+  )
+  .map((obj) => ({ ...obj, theme: '#c94736', icon: IconDue }))
+const totalUpcoming = recurringBills
+  .filter(
+    (transaction) =>
+      new Date(transaction.date).getDate() > today &&
+      new Date(transaction.date).getDate() - today > 7,
+  )
+  .map((obj) => ({ ...obj, theme: 'grey-500' }))
+
+const displayItems = [...paidBills, ...dueSoon, ...totalUpcoming]
+const sortedItems = ref(displayItems)
+
+function sortTransactions(selectedItem: SortOption): void {
+  if (selectedItem.sortBy === 'date') {
+    if (selectedItem.direction === 'asc') {
+      sortedItems.value.sort(
+        (a, b) => new Date(a.date).getDate() - new Date(b.date).getDate(),
+      )
+    } else if (selectedItem.direction === 'desc') {
+      sortedItems.value.sort(
+        (a, b) => new Date(b.date).getDate() - new Date(a.date).getDate(),
+      )
+    }
+  } else {
+    sortRegularTransactions(selectedItem)
+  }
+}
+
+function sortRegularTransactions(selectedItem: SortOption): void {
+  if (selectedItem.direction === 'asc') {
+    sortedItems.value.sort((a, b) =>
+      a[selectedItem.sortBy] == b[selectedItem.sortBy]
+        ? 0
+        : a[selectedItem.sortBy] < b[selectedItem.sortBy]
+          ? -1
+          : 1,
     )
-})
-
-const paidBills = computed(() => {
-  return recurringBills.value
-    .filter((transaction) => new Date(transaction.date).getDate() < today)
-    .map((obj) => ({ ...obj, theme: '#277c78', icon: IconPaid }))
-})
-
-const dueSoon = computed(() => {
-  return recurringBills.value
-    .filter(
-      (transaction) =>
-        new Date(transaction.date).getDate() > today &&
-        new Date(transaction.date).getDate() - today < 7,
+  } else if (selectedItem.direction === 'desc') {
+    sortedItems.value.sort((a, b) =>
+      a[selectedItem.sortBy] == b[selectedItem.sortBy]
+        ? 0
+        : a[selectedItem.sortBy] < b[selectedItem.sortBy]
+          ? 1
+          : -1,
     )
-    .map((obj) => ({ ...obj, theme: '#c94736', icon: IconDue }))
-})
-
-const totalUpcoming = computed(() => {
-  return recurringBills.value
-    .filter((transaction) => new Date(transaction.date).getDate() > today)
-    .map((obj) => ({ ...obj, theme: 'grey-500' }))
-})
-
-const displayItems = computed(() => {
-  return [...paidBills.value, ...dueSoon.value, ...totalUpcoming.value]
-})
+  }
+}
 </script>
