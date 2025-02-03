@@ -2,10 +2,12 @@
   <div class="bg-white rounded-3 p-6">
     <div class="row pb-7">
       <ThemeCardHeader
-        :title="name"
-        :theme="theme"
+        :title="pot.name"
+        :theme="pot.theme"
         edit-label="Edit Pot"
         delete-label="Delete Pot"
+        @edit="$emit('edit')"
+        @delete="$emit('delete', pot)"
       />
     </div>
     <div class="row">
@@ -13,7 +15,7 @@
         <div class="d-flex justify-content-between align-items-center">
           <span class="fs-4 text-grey-500">Total saved</span>
           <span class="fs-1 fw-bold">
-            {{ toCurrency(total) }}
+            {{ toCurrency(pot.total) }}
           </span>
         </div>
         <div
@@ -23,20 +25,30 @@
         >
           <div
             class="progress-bar"
-            :style="`width:${percent}%; background-color: ${theme}`"
+            :style="`width:${percent}%; background-color: ${pot.theme}`"
           />
         </div>
         <div class="d-flex justify-content-between align-items-center">
           <span class="fs-5 text-grey-500 fw-bold">{{ percent }}%</span>
           <span class="fs-4 text-grey-500">
-            Target of {{ toCurrency(target, 'short') }}
+            Target of {{ toCurrency(pot.target, 'short') }}
           </span>
         </div>
       </div>
     </div>
     <div class="row pt-7">
-      <button class="btn btn-secondary col mx-4">+ Add Money</button>
-      <button class="btn btn-secondary col me-4">Withdraw</button>
+      <button
+        class="btn btn-secondary col mx-4"
+        @click="$emit('addMoney', pot)"
+      >
+        + Add Money
+      </button>
+      <button
+        class="btn btn-secondary col me-4"
+        @click="$emit('withdrawMoney', pot)"
+      >
+        Withdraw
+      </button>
     </div>
   </div>
 </template>
@@ -44,16 +56,14 @@
 import { toCurrency } from '~/utils/formatter'
 import { computed } from 'vue'
 import ThemeCardHeader from '~/components/layout/ThemeCardHeader.vue'
+import type { Pot } from '~/@types/types'
 
 interface Props {
-  name: string
-  target: number
-  total: number
-  theme: string
+  pot: Pot
 }
 const props = defineProps<Props>()
 
 const percent = computed(() => {
-  return ((props.total / props.target) * 100).toFixed(1)
+  return ((props.pot.total / props.pot.target) * 100).toFixed(1)
 })
 </script>

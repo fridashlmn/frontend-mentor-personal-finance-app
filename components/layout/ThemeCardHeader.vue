@@ -14,9 +14,11 @@
         <IconEllipsis />
       </a>
       <ul class="dropdown-menu">
-        <li class="dropdown-item">{{ editLabel }}</li>
+        <li class="dropdown-item" @click="$emit('edit')">{{ editLabel }}</li>
         <li><hr class="dropdown-divider" /></li>
-        <li class="dropdown-item text-red">{{ deleteLabel }}</li>
+        <li class="dropdown-item text-red" @click="$emit('delete')">
+          {{ deleteLabel }}
+        </li>
       </ul>
     </div>
   </div>

@@ -9,6 +9,7 @@
         :type="type"
         :placeholder="placeholder"
         :aria-label="type"
+        @input="$emit('update:modelValue', $event.target.value)"
       />
       <span class="inputPrefix fs-4 text-beige-500">
         <slot name="prefix" />
@@ -31,11 +32,12 @@ interface Props {
   icon?: FunctionalComponent
   helperText?: string
   label?: string
-  prefix?: string
+  prefix?: boolean
 }
 
 withDefaults(defineProps<Props>(), {
   type: 'input',
+  prefix: false,
 })
 
 const input = ref('')

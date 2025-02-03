@@ -1,22 +1,22 @@
 <template>
   <div>
-    <SelectDropdown
-      :select-items="selectCategories"
-      label="Budget Category"
+    <InputField
+      placeholder="e.g. 2000"
+      type="text"
+      label="Pot Name"
       class="mb-4"
-      dropdown-direction="dropdown-center"
     />
     <InputField
       placeholder="e.g. 2000"
       type="text"
-      label="Maximum Spend"
+      label="Target"
       class="mb-4"
       :prefix="true"
     >
       <template #prefix>$</template>
     </InputField>
     <SelectDropdown
-      :select-items="selectItemsBudgetColors"
+      :select-items="itemsByCategory"
       label="Theme"
       dropdown-direction="dropdown-center"
       :themed="true"
@@ -42,19 +42,19 @@
 <script setup lang="ts">
 import InputField from '~/components/layout/InputField.vue'
 import SelectDropdown from '~/components/layout/SelectDropdown.vue'
-import { selectCategories, selectColors } from '~/content/selects'
-import type { Budget } from '~/@types/types'
+import { selectColors } from '~/content/selects'
+import type { Pot } from '~/@types/types'
 import { computed } from 'vue'
 
 interface Props {
-  budgets: Budget[]
+  pots: Pot[]
 }
 const props = defineProps<Props>()
 
-const selectItemsBudgetColors = computed(() => {
-  for (let i = 0; i < props.budgets.length; i++) {
+const itemsByCategory = computed(() => {
+  for (let i = 0; i < props.pots.length; i++) {
     for (let j = 0; j < selectColors.length; j++) {
-      if (props.budgets[i].theme === selectColors[j].theme) {
+      if (props.pots[i].theme.toLowerCase() === selectColors[j].theme) {
         selectColors[j].disabled = true
       }
     }
