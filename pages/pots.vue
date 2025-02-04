@@ -9,7 +9,7 @@
       </template>
       <template #content>
         <div class="row row-cols-1 row-cols-lg-2 gx-6 mt-5 mt-md-7">
-          <div v-for="(pot, index) in store.pots" :key="index" class="col">
+          <div v-for="(pot, index) in pots" :key="index" class="col">
             <PotItem
               class="mb-6"
               :pot="pot"
@@ -34,10 +34,11 @@
               :subline="modal.subline"
               :back-link="modal.backLink"
               @close="state.modalPots.hide()"
+              @modalBtnClick="handleButtonClick"
             >
               <PotForm
                 v-if="modal.variant === 'edit' || modal.variant === 'add'"
-                :pots="store.pots"
+                :pots="pots"
               />
               <AddWithdramForm
                 v-if="
@@ -58,11 +59,14 @@
 import PotItem from '~/components/pots/PotItem.vue'
 import Container from '~/components/layout/Container.vue'
 import ModalContent from '~/components/layout/ModalContent.vue'
-import { reactive, ref } from 'vue'
+import { reactive, ref, computed } from 'vue'
 import PotForm from '~/components/pots/PotForm.vue'
 import AddWithdramForm from '~/components/pots/AddWithdramForm.vue'
 import type { Pot } from '~/@types/types'
 import { usePotsStore } from '@/stores/pots'
+
+const store = usePotsStore()
+const pots = computed(() => store.pots)
 
 // eslint-disable-next-line no-undef
 const { $bootstrap } = useNuxtApp()
@@ -78,7 +82,6 @@ const state = reactive({
   modalPots: null,
 })
 const selectedPot = ref<Pot>()
-const store = usePotsStore()
 
 function openAddPotModal(): void {
   state.modalPots = new $bootstrap.Modal('#modalPots', {})
@@ -104,6 +107,7 @@ function openEditPotModal(): void {
 
 function openDeletePotModal(pot: Pot): void {
   state.modalPots = new $bootstrap.Modal('#modalPots', {})
+  selectedPot.value = pot
   modal.value.variant = 'delete'
   modal.value.title = `Delete '${pot.name}'`
   modal.value.buttonLabel = 'Yes, Confirm Deletion'
@@ -136,5 +140,12 @@ function openWithdrawMoneyModal(pot: Pot): void {
   modal.value.subline =
     'Withdraw from your pot to put money back in your main balance. This will reduce the amount you have in this pot.'
   state.modalPots!.show()
+}
+
+function handleButtonClick(): void {
+  if (modal.value.variant === 'delete') {
+    store.delete(selectedPot.value!)
+    state.modalPots!.hide()
+  }
 }
 </script>

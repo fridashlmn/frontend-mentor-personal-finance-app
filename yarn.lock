@@ -1652,7 +1652,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pinia/nuxt@npm:0.9.0":
+"@pinia/nuxt@npm:^0.9.0":
   version: 0.9.0
   resolution: "@pinia/nuxt@npm:0.9.0"
   dependencies:
@@ -7826,7 +7826,7 @@ __metadata:
     "@nuxt/eslint": "npm:^0.7.5"
     "@nuxtjs/google-fonts": "npm:^3.2.0"
     "@nuxtjs/style-resources": "npm:^1.2.2"
-    "@pinia/nuxt": "npm:0.9.0"
+    "@pinia/nuxt": "npm:^0.9.0"
     "@popperjs/core": "npm:^2.11.8"
     "@types/bootstrap": "npm:^5"
     "@types/masonry-layout": "npm:^4"
