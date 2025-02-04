@@ -99,15 +99,17 @@ import SelectDropdown from '~/components/layout/SelectDropdown.vue'
 import InputField from '~/components/layout/InputField.vue'
 import IconSearch from '~/assets/images/icon-search.svg?component'
 import { formatDate, toCurrency } from '~/utils/formatter'
-import { transactions } from '~/content/data.json'
 import type { SortOption } from '~/@types/types'
 import { ref, computed } from 'vue'
 import Pagination from '~/components/layout/Pagination.vue'
 import { selectCategoriesWithAll, selectSorting } from '~/content/selects'
+import { useTransactionsStore } from '~/stores/transactions'
+
+const transactionsStore = useTransactionsStore()
 // eslint-disable-next-line no-undef
 const viewport = useViewport()
 const displayCurrentPage = ref(1)
-const sortedTransactions = ref(transactions)
+const sortedTransactions = ref(transactionsStore.transactions)
 const itemsPerPage = 10
 
 const tableHead: string[] = [
@@ -127,9 +129,9 @@ const displayedPosts = computed(() => {
 
 function filterTransactions(selectedItem: { id: number; label: string }) {
   if (selectedItem.label === 'All Transactions') {
-    sortedTransactions.value = transactions
+    sortedTransactions.value = transactionsStore.transactions
   } else {
-    sortedTransactions.value = transactions.filter(
+    sortedTransactions.value = transactionsStore.transactions.filter(
       (transaction) => transaction.category === selectedItem.label,
     )
   }

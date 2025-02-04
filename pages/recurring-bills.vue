@@ -67,7 +67,6 @@
   </Container>
 </template>
 <script setup lang="ts">
-import { transactions } from '~/content/data.json'
 import InputField from '~/components/layout/InputField.vue'
 import SelectDropdown from '~/components/layout/SelectDropdown.vue'
 import IconSearch from '~/assets/images/icon-search.svg?component'
@@ -80,9 +79,11 @@ import Container from '~/components/layout/Container.vue'
 import RecurringBillsSummary from '~/components/recurringBills/RecurringBillsSummary.vue'
 import { globalToday } from '~/content/date'
 import type { SortOption } from '~/@types/types'
+import { useTransactionsStore } from '~/stores/transactions'
 
 // eslint-disable-next-line no-undef
 const viewport = useViewport()
+const transactionsStore = useTransactionsStore()
 
 const filterItems: SortOption[] = [
   { id: 1, label: 'Latest', direction: 'asc', sortBy: 'date' },
@@ -96,7 +97,7 @@ const filterItems: SortOption[] = [
 const tableHead: string[] = ['Bill Title', 'Due Date', 'Amount']
 const today = globalToday.getDate()
 
-const recurringBills = transactions
+const recurringBills = transactionsStore.transactions
   .filter((transaction) => transaction.recurring)
   .filter(
     (value, index, self) =>

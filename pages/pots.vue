@@ -9,10 +9,10 @@
       </template>
       <template #content>
         <div class="row row-cols-1 row-cols-lg-2 gx-6 mt-5 mt-md-7">
-          <div v-for="(item, index) in pots" :key="index" class="col">
+          <div v-for="(pot, index) in store.pots" :key="index" class="col">
             <PotItem
               class="mb-6"
-              :pot="item"
+              :pot="pot"
               @edit="openEditPotModal"
               @delete="openDeletePotModal"
               @add-money="openAddMoneyModal"
@@ -37,7 +37,7 @@
             >
               <PotForm
                 v-if="modal.variant === 'edit' || modal.variant === 'add'"
-                :pots="pots"
+                :pots="store.pots"
               />
               <AddWithdramForm
                 v-if="
@@ -55,7 +55,6 @@
   </div>
 </template>
 <script setup lang="ts">
-import { pots } from '~/content/data.json'
 import PotItem from '~/components/pots/PotItem.vue'
 import Container from '~/components/layout/Container.vue'
 import ModalContent from '~/components/layout/ModalContent.vue'
@@ -63,6 +62,7 @@ import { reactive, ref } from 'vue'
 import PotForm from '~/components/pots/PotForm.vue'
 import AddWithdramForm from '~/components/pots/AddWithdramForm.vue'
 import type { Pot } from '~/@types/types'
+import { usePotsStore } from '@/stores/pots'
 
 // eslint-disable-next-line no-undef
 const { $bootstrap } = useNuxtApp()
@@ -77,7 +77,8 @@ const modal = ref({
 const state = reactive({
   modalPots: null,
 })
-const selectedPot = ref<Pot>('')
+const selectedPot = ref<Pot>()
+const store = usePotsStore()
 
 function openAddPotModal(): void {
   state.modalPots = new $bootstrap.Modal('#modalPots', {})

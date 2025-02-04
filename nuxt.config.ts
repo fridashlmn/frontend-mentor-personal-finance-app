@@ -14,7 +14,7 @@ export default defineNuxtConfig({
     },
   },
 
-  modules: ['nuxt-viewport'],
+  modules: ['nuxt-viewport', '@pinia/nuxt'],
 
   vite: {
     css: {

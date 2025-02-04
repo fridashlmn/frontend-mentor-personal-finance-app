@@ -13,18 +13,18 @@
             color="white"
           >
             <span class="text-white fs-1 fw-bold">
-              {{ toCurrency(data.balance.current) }}
+              {{ toCurrency(balanceStore.balance.current) }}
             </span>
           </OverviewCard>
         </div>
         <div class="col mb-3">
           <OverviewCard class="fs-1 fw-bold" title="Income" variant="small">
-            <span>{{ toCurrency(data.balance.income) }}</span>
+            <span>{{ toCurrency(balanceStore.balance.income) }}</span>
           </OverviewCard>
         </div>
         <div class="col mb-7">
           <OverviewCard class="fs-1 fw-bold" title="Expenses" variant="small">
-            <span>{{ toCurrency(data.balance.expenses) }}</span>
+            <span>{{ toCurrency(balanceStore.balance.expenses) }}</span>
           </OverviewCard>
         </div>
       </div>
@@ -37,7 +37,7 @@
             link-target="/pots"
             class="me-lg-6"
           >
-            <PotOverview :pots="data.pots" />
+            <PotOverview :pots="potsStore.pots" />
           </OverviewCard>
         </div>
         <div class="gridItem wSmall">
@@ -48,8 +48,8 @@
             class="mt-4 mt-md-6 mt-lg-0"
           >
             <BudgetOverview
-              :budgets="data.budgets"
-              :transactions="data.transactions"
+              :budgets="budgetStore.budgets"
+              :transactions="transactionsStore.transactions"
             />
           </OverviewCard>
         </div>
@@ -61,7 +61,7 @@
             class="me-lg-6 mt-4 mt-md-6"
           >
             <TransactionsOverview
-              :transactions="data.transactions.slice(0, 5)"
+              :transactions="transactionsStore.transactions.slice(0, 5)"
             />
           </OverviewCard>
         </div>
@@ -80,15 +80,23 @@
   </Container>
 </template>
 <script setup lang="ts">
-import data from '~/content/data.json'
 import PotOverview from '~/components/pots/PotOverview.vue'
 import RecurringBillsOverview from '~/components/recurringBills/RecurringBillsOverview.vue'
 import BudgetOverview from '~/components/budgets/BudgetOverview.vue'
 import { computed, onMounted } from 'vue'
 import Container from '~/components/layout/Container.vue'
+import { useBudgetsStore } from '~/stores/budgets'
+import { useTransactionsStore } from '~/stores/transactions'
+import { usePotsStore } from '~/stores/pots'
+import { useBalanceStore } from '~/stores/balance'
+
+const balanceStore = useBalanceStore()
+const budgetStore = useBudgetsStore()
+const transactionsStore = useTransactionsStore()
+const potsStore = usePotsStore()
 
 const uniqueRecurringBills = computed(() => {
-  const recurringBills = data.transactions.filter(
+  const recurringBills = transactionsStore.transactions.filter(
     (transaction) => transaction.recurring,
   )
   return recurringBills.filter(

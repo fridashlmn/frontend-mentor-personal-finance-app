@@ -17,7 +17,12 @@
       <slot />
     </div>
     <div class="modal-footer w-100 mt-5">
-      <button type="button" class="btn modalButton" :class="buttonVariant">
+      <button
+        type="button"
+        class="btn modalButton"
+        :class="buttonVariant"
+        @click="$emit('modalBtnClick')"
+      >
         {{ buttonLabel }}
       </button>
       <button

@@ -11,18 +11,18 @@
         <div class="col-lg-5">
           <SpendingSummary
             class="mb-6"
-            :budgets="budgets"
+            :budgets="budgetStore.budgets"
             :current-transactions="currentTransactions"
           />
         </div>
         <div class="col-lg-7">
-          <div v-for="budget in budgets" :key="budget.category">
+          <div v-for="budget in budgetStore.budgets" :key="budget.category">
             <CategoryItem
               class="mb-6"
               :budget="budget"
               :transactions="getCurrentTransactionsByCategory(budget.category)"
               @edit="openEditBudgetModal"
-              @delete="openDeleteBudgetModal"
+              @delete="openDeleteBudgetModal(budget.category)"
             />
           </div>
         </div>
@@ -44,10 +44,11 @@
                 :subline="modal.subline"
                 :back-link="modal.backLink"
                 @close="state.modalBudgets.hide()"
+                @modalBtnClick="handleButtonClick"
               >
                 <BudgetForm
                   v-if="modal.variant === 'edit' || modal.variant === 'add'"
-                  :budgets="budgets"
+                  :budgets="budgetStore.budgets"
                 />
               </ModalContent>
             </div>
@@ -60,13 +61,14 @@
 <script setup lang="ts">
 import Container from '~/components/layout/Container.vue'
 import { computed, reactive, ref } from 'vue'
-import { budgets, transactions } from '~/content/data.json'
 import { globalToday } from '~/content/date'
 import SpendingSummary from '~/components/budgets/SpendingSummary.vue'
 import CategoryItem from '~/components/budgets/CategoryItem.vue'
 import type { Transaction } from '~/@types/types'
 import ModalContent from '~/components/layout/ModalContent.vue'
 import BudgetForm from '~/components/budgets/BudgetForm.vue'
+import { useBudgetsStore } from '~/stores/budgets'
+import { useTransactionsStore } from '~/stores/transactions'
 
 // eslint-disable-next-line no-undef
 const { $bootstrap } = useNuxtApp()
@@ -80,13 +82,17 @@ const modal = ref({
   subline: '',
   backLink: '',
 })
+const budgetStore = useBudgetsStore()
+const transactionsStore = useTransactionsStore()
+
 const state = reactive({
   modalBudgets: null,
+  categoryInModal: '',
 })
 
 const currentTransactions = computed(() => {
-  return transactions.filter(
-    (transaction) =>
+  return transactionsStore.transactions.filter(
+    (transaction: Transaction) =>
       new Date(transaction.date).getDate() < today &&
       new Date(transaction.date).getMonth() === thisMonth,
   )
@@ -94,7 +100,7 @@ const currentTransactions = computed(() => {
 
 function getCurrentTransactionsByCategory(category: string): Transaction[] {
   return currentTransactions.value.filter(
-    (transaction) => transaction.category === category,
+    (transaction: Transaction) => transaction.category === category,
   )
 }
 
@@ -119,6 +125,7 @@ function openEditBudgetModal(): void {
 }
 
 function openDeleteBudgetModal(category: string): void {
+  state.categoryInModal = category
   state.modalBudgets = new $bootstrap.Modal('#modalBudgets', {})
   modal.value.variant = 'delete'
   modal.value.title = `Delete '${category}'`
@@ -128,5 +135,12 @@ function openDeleteBudgetModal(category: string): void {
   modal.value.subline =
     'Are you sure you want to delete this budget? This action cannot be reversed, and all the data inside it will be removed forever.'
   state.modalBudgets!.show()
+}
+
+function handleButtonClick(): void {
+  if (modal.value.variant === 'delete') {
+    console.log('delete')
+    state.modalBudgets!.hide()
+  }
 }
 </script>
