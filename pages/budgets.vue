@@ -39,16 +39,17 @@
             <div class="modal-content">
               <ModalContent
                 :title="modal.title"
-                :button-label="modal.buttonLabel"
-                :button-variant="modal.buttonVariant"
                 :subline="modal.subline"
                 :back-link="modal.backLink"
-                @close="state.modalBudgets.hide()"
-                @modalBtnClick="handleButtonClick"
+                @close="closeModal"
               >
                 <BudgetForm
-                  v-if="modal.variant === 'edit' || modal.variant === 'add'"
                   :budgets="budgets"
+                  :type="modal.type"
+                  :selected-budget-category="selectedBudgetCategory"
+                  :button-label="modal.buttonLabel"
+                  :button-variant="modal.buttonVariant"
+                  @close="closeModal"
                 />
               </ModalContent>
             </div>
@@ -64,23 +65,26 @@ import { computed, reactive, ref } from 'vue'
 import { globalToday } from '~/content/date'
 import SpendingSummary from '~/components/budgets/SpendingSummary.vue'
 import CategoryItem from '~/components/budgets/CategoryItem.vue'
-import type { Budget, Transaction } from '~/@types/types'
+import type { Transaction } from '~/@types/types'
 import ModalContent from '~/components/layout/ModalContent.vue'
 import BudgetForm from '~/components/budgets/BudgetForm.vue'
 import { useBudgetsStore } from '~/stores/budgets'
 import { useTransactionsStore } from '~/stores/transactions'
+import { storeToRefs } from 'pinia'
+import { useInputStore } from '~/stores/input'
 
 const budgetStore = useBudgetsStore()
+const { budgets } = storeToRefs(budgetStore)
 const transactionsStore = useTransactionsStore()
-const budgets = computed(() => budgetStore.budgets)
 const transactions = computed(() => transactionsStore.transactions)
+const inputStore = useInputStore()
 
 // eslint-disable-next-line no-undef
 const { $bootstrap } = useNuxtApp()
 const today = globalToday.getDate()
 const thisMonth = globalToday.getMonth()
 const modal = ref({
-  variant: '',
+  type: '',
   title: '',
   buttonLabel: '',
   buttonVariant: 'btn-primary ',
@@ -92,7 +96,8 @@ const state = reactive({
   modalBudgets: null,
   categoryInModal: '',
 })
-const selectedBudgetCategory = ref<Budget>()
+
+const selectedBudgetCategory = ref<string>()
 
 const currentTransactions = computed(() => {
   return transactions.value.filter(
@@ -110,7 +115,7 @@ function getCurrentTransactionsByCategory(category: string): Transaction[] {
 
 function openAddBudgetModal(): void {
   state.modalBudgets = new $bootstrap.Modal('#modalBudgets', {})
-  modal.value.variant = 'add'
+  modal.value.type = 'add'
   modal.value.title = 'Add New Budget'
   modal.value.buttonLabel = 'Add Budget'
   modal.value.subline =
@@ -120,7 +125,7 @@ function openAddBudgetModal(): void {
 
 function openEditBudgetModal(): void {
   state.modalBudgets = new $bootstrap.Modal('#modalBudgets', {})
-  modal.value.variant = 'edit'
+  modal.value.type = 'edit'
   modal.value.title = 'Edit Budget'
   modal.value.buttonLabel = 'Save Changes'
   modal.value.subline =
@@ -131,7 +136,7 @@ function openEditBudgetModal(): void {
 function openDeleteBudgetModal(category: string): void {
   selectedBudgetCategory.value = category
   state.modalBudgets = new $bootstrap.Modal('#modalBudgets', {})
-  modal.value.variant = 'delete'
+  modal.value.type = 'delete'
   modal.value.title = `Delete '${category}'`
   modal.value.buttonLabel = 'Yes, Confirm Deletion'
   modal.value.buttonVariant = 'btn-danger'
@@ -141,10 +146,8 @@ function openDeleteBudgetModal(category: string): void {
   state.modalBudgets!.show()
 }
 
-function handleButtonClick(): void {
-  if (modal.value.variant === 'delete') {
-    budgetStore.delete(selectedBudgetCategory.value!)
-    state.modalBudgets!.hide()
-  }
+function closeModal(): void {
+  inputStore.clear()
+  state.modalBudgets!.hide()
 }
 </script>

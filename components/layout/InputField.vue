@@ -5,17 +5,16 @@
       <input
         class="form-control field"
         :class="{ inputWithPrefix: prefix }"
-        v-model="input"
+        v-model="inputValue"
         :type="type"
         :placeholder="placeholder"
         :aria-label="type"
-        @input="$emit('update:modelValue', $event.target.value)"
       />
       <span class="inputPrefix fs-4 text-beige-500">
         <slot name="prefix" />
       </span>
       <div class="iconContainer">
-        <component v-if="!input" :is="icon" width="100%" height="100%" />
+        <component v-if="!inputValue" :is="icon" width="100%" height="100%" />
         <span v-else class="icon text-center" @click="clearField">x</span>
       </div>
     </div>
@@ -23,8 +22,9 @@
   </form>
 </template>
 <script setup lang="ts">
-import type { FunctionalComponent } from 'vue'
-import { ref } from 'vue'
+import { type FunctionalComponent } from 'vue'
+import { useInputStore } from '~/stores/input'
+import { storeToRefs } from 'pinia'
 
 interface Props {
   placeholder: string
@@ -39,10 +39,10 @@ withDefaults(defineProps<Props>(), {
   type: 'input',
   prefix: false,
 })
-
-const input = ref('')
+const inputStore = useInputStore()
+const { inputValue } = storeToRefs(inputStore)
 
 function clearField(): void {
-  input.value = ''
+  inputStore.clear()
 }
 </script>

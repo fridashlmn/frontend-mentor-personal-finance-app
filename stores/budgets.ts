@@ -1,14 +1,30 @@
 import { defineStore } from 'pinia'
 import { useLocalStorage } from '@vueuse/core'
-import type { Pot } from '~/@types/types'
+import type { Budget } from '~/@types/types'
 
 export const useBudgetsStore = defineStore('budgets', {
-  state: () => ({
-    budgets: useLocalStorage('budgets', localStorage, { mergeDefaults: true }),
-  }),
+  state: () => {
+    return {
+      budgets: useLocalStorage('budgets', localStorage, {
+        mergeDefaults: true,
+      }),
+    }
+  },
   actions: {
     delete(category: string) {
-      this.budgets = this.budgets.filter((p: Pot) => p.category !== category)
+      this.budgets = this.budgets.filter((b: Budget) => b.category !== category)
+      localStorage.setItem('budgets', JSON.stringify(this.budgets))
+    },
+    add(category: string, maximum: number, theme: string) {
+      const existingEntries = JSON.parse(
+        localStorage.getItem('budgets') || '[]',
+      )
+      existingEntries.push({
+        category: category,
+        maximum: maximum,
+        theme: theme,
+      })
+      this.budgets = existingEntries
       localStorage.setItem('budgets', JSON.stringify(this.budgets))
     },
   },

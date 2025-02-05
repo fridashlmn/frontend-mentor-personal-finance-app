@@ -1,12 +1,12 @@
 <template>
-  <div>
+  <div class="d-flex align-items-center">
     <span
       v-if="helperMessage && viewport.isGreaterOrEquals('tablet')"
       class="w-100 me-2 text-grey-500 fs-4 text-end"
     >
       {{ helperMessage }}
     </span>
-    <div class="btn-group d-flex flex-column" :class="dropdownDirection">
+    <div class="btn-group w-100 d-flex flex-column" :class="dropdownDirection">
       <span class="fs-5 fw-bold text-grey-500 mb-1">{{ label }}</span>
       <button
         v-if="viewport.isGreaterOrEquals('tablet') || !icon"

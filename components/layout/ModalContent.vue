@@ -5,7 +5,7 @@
         class="d-flex w-100 flex-row align-items-center justify-content-between"
       >
         <h1 class="fs-1 fw-bold">{{ title }}</h1>
-        <NuxtLink data-bs-dismiss="modal">
+        <NuxtLink data-bs-dismiss="modal" @click="$emit('close')">
           <IconCloseModal />
         </NuxtLink>
       </div>
@@ -16,15 +16,7 @@
     <div class="modal-body">
       <slot />
     </div>
-    <div class="modal-footer w-100 mt-5">
-      <button
-        type="button"
-        class="btn modalButton"
-        :class="buttonVariant"
-        @click="$emit('modalBtnClick')"
-      >
-        {{ buttonLabel }}
-      </button>
+    <div class="modal-footer">
       <button
         v-if="backLink"
         class="mt-5 btn btn-dark w-100"
@@ -41,15 +33,7 @@ import IconCloseModal from '~/assets/images/icon-close-modal.svg?component'
 interface Props {
   title: string
   subline: string
-  buttonLabel: string
-  buttonVariant: string
   backLink?: string
 }
 defineProps<Props>()
 </script>
-<style lang="scss">
-.modalButton {
-  max-width: none;
-  width: 100%;
-}
-</style>

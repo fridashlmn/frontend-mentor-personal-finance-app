@@ -53,7 +53,7 @@
 import { toCurrency } from '~/utils/formatter'
 import Card from '~/components/layout/Card.vue'
 import DoughnutChart from '~/components/layout/DoughnutChart.vue'
-import type { Budget, DoughnutChartData, Transaction } from '~/@types/types'
+import type { Budget, Transaction } from '~/@types/types'
 import { computed } from 'vue'
 
 interface Props {
@@ -64,7 +64,7 @@ const props = defineProps<Props>()
 
 const totalBudget = computed(() => {
   return props.budgets
-    .map((budget) => budget.maximum)
+    .map((budget) => Number(budget.maximum))
     .reduce((accumulator, currentValue) => {
       return accumulator + currentValue
     }, 0)
@@ -93,15 +93,17 @@ const amountSpentByCategory = computed(() => {
   return array
 })
 
-const chartData: DoughnutChartData = {
-  labels: props.budgets.map((budget) => budget.category),
-  datasets: [
-    {
-      backgroundColor: props.budgets.map((budget) => budget.theme),
-      data: amountSpentByCategory.value,
-    },
-  ],
-}
+const chartData = computed(() => {
+  return {
+    labels: props.budgets.map((budget) => budget.category),
+    datasets: [
+      {
+        backgroundColor: props.budgets.map((budget) => budget.theme),
+        data: amountSpentByCategory.value,
+      },
+    ],
+  }
+})
 
 function getCurrentAmountSpentByCategory(category: string): string {
   const transactionCategory = props.currentTransactions.filter(

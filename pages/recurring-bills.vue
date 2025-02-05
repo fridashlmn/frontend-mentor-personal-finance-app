@@ -72,7 +72,7 @@ import SelectDropdown from '~/components/layout/SelectDropdown.vue'
 import IconSearch from '~/assets/images/icon-search.svg?component'
 import IconDue from '~/assets/images/icon-bill-due.svg?component'
 import IconPaid from '~/assets/images/icon-bill-paid.svg?component'
-import { ref } from 'vue'
+import { ref, markRaw } from 'vue'
 import DataTable from '~/components/layout/DataTable.vue'
 import { formatDay, toCurrency } from '~/utils/formatter'
 import Container from '~/components/layout/Container.vue'
@@ -106,14 +106,14 @@ const recurringBills = transactionsStore.transactions
   .sort((a, b) => new Date(a.date).getDate() - new Date(b.date).getDate())
 const paidBills = recurringBills
   .filter((transaction) => new Date(transaction.date).getDate() < today)
-  .map((obj) => ({ ...obj, theme: '#277c78', icon: IconPaid }))
+  .map((obj) => ({ ...obj, theme: '#277c78', icon: markRaw(IconPaid) }))
 const dueSoon = recurringBills
   .filter(
     (transaction) =>
       new Date(transaction.date).getDate() > today &&
       new Date(transaction.date).getDate() - today < 7,
   )
-  .map((obj) => ({ ...obj, theme: '#c94736', icon: IconDue }))
+  .map((obj) => ({ ...obj, theme: '#c94736', icon: markRaw(IconDue) }))
 const totalUpcoming = recurringBills
   .filter(
     (transaction) =>
@@ -122,8 +122,7 @@ const totalUpcoming = recurringBills
   )
   .map((obj) => ({ ...obj, theme: 'grey-500' }))
 
-const displayItems = [...paidBills, ...dueSoon, ...totalUpcoming]
-const sortedItems = ref(displayItems)
+const sortedItems = ref([...paidBills, ...dueSoon, ...totalUpcoming])
 
 function sortTransactions(selectedItem: SortOption): void {
   if (selectedItem.sortBy === 'date') {
