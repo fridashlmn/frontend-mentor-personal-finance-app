@@ -29,24 +29,30 @@
           <div class="modal-content">
             <ModalContent
               :title="modal.title"
-              :button-label="modal.buttonLabel"
-              :button-variant="modal.buttonVariant"
-              :subline="modal.subline"
+              :sub-line="modal.subLine"
               :back-link="modal.backLink"
-              @close="state.modalPots.hide()"
-              @modalBtnClick="handleButtonClick"
+              @close="closeModal"
             >
-              <PotForm
-                v-if="modal.variant === 'edit' || modal.variant === 'add'"
-                :pots="pots"
-              />
-              <AddWithdramForm
+              <AddWithdrawForm
                 v-if="
-                  modal.variant === 'addMoney' ||
-                  modal.variant === 'withdrawMoney'
+                  (modal.type === 'addMoney' ||
+                    modal.type === 'withdrawMoney') &&
+                  selectedPot
                 "
-                :variant="modal.variant"
+                :type="modal.type"
                 :pot="selectedPot"
+                :button-label="modal.buttonLabel"
+                :button-variant="modal.buttonVariant"
+                @close="closeModal"
+              />
+              <PotForm
+                v-else
+                :pots="pots"
+                :type="modal.type"
+                :button-label="modal.buttonLabel"
+                :button-variant="modal.buttonVariant"
+                :selected-pot="selectedPot"
+                @close="closeModal"
               />
             </ModalContent>
           </div>
@@ -61,21 +67,24 @@ import Container from '~/components/layout/Container.vue'
 import ModalContent from '~/components/layout/ModalContent.vue'
 import { reactive, ref, computed } from 'vue'
 import PotForm from '~/components/pots/PotForm.vue'
-import AddWithdramForm from '~/components/pots/AddWithdramForm.vue'
+import AddWithdrawForm from '~/components/pots/AddWithdrawForm.vue'
 import type { Pot } from '~/@types/types'
 import { usePotsStore } from '@/stores/pots'
+import { useInputStore } from '~/stores/input'
 
-const store = usePotsStore()
-const pots = computed(() => store.pots)
+const potStore = usePotsStore()
+const pots = computed(() => potStore.pots)
+const inputStore1 = useInputStore(1)
+const inputStore2 = useInputStore(2)
 
 // eslint-disable-next-line no-undef
 const { $bootstrap } = useNuxtApp()
 const modal = ref({
-  variant: '',
+  type: '',
   title: '',
   buttonLabel: '',
   buttonVariant: 'btn-primary ',
-  subline: '',
+  subLine: '',
   backLink: '',
 })
 const state = reactive({
@@ -84,68 +93,72 @@ const state = reactive({
 const selectedPot = ref<Pot>()
 
 function openAddPotModal(): void {
+  // @ts-expect-error bootstrap import
   state.modalPots = new $bootstrap.Modal('#modalPots', {})
-  modal.value.variant = 'add'
+  modal.value.type = 'add'
   modal.value.title = 'Add New Pot'
   modal.value.buttonLabel = 'Add Pot'
   modal.value.backLink = ''
-  modal.value.subline =
+  modal.value.subLine =
     'Create a pot to set savings targets. These can help keep you on track as you save for special purchases.'
   state.modalPots!.show()
 }
 
 function openEditPotModal(): void {
+  // @ts-expect-error bootstrap import
   state.modalPots = new $bootstrap.Modal('#modalPots', {})
-  modal.value.variant = 'edit'
+  modal.value.type = 'edit'
   modal.value.title = 'Edit Pot'
   modal.value.buttonLabel = 'Save Changes'
   modal.value.backLink = ''
-  modal.value.subline =
+  modal.value.subLine =
     'If your saving targets change, feel free to update your pots.'
   state.modalPots!.show()
 }
 
 function openDeletePotModal(pot: Pot): void {
+  // @ts-expect-error bootstrap import
   state.modalPots = new $bootstrap.Modal('#modalPots', {})
   selectedPot.value = pot
-  modal.value.variant = 'delete'
+  modal.value.type = 'delete'
   modal.value.title = `Delete '${pot.name}'`
   modal.value.buttonLabel = 'Yes, Confirm Deletion'
   modal.value.buttonVariant = 'btn-danger'
   modal.value.backLink = 'No, Go Back'
-  modal.value.subline =
+  modal.value.subLine =
     'Are you sure you want to delete this pot? This action cannot be reversed, and all the data inside it will be removed forever.'
   state.modalPots!.show()
 }
 
 function openAddMoneyModal(pot: Pot): void {
+  // @ts-expect-error bootstrap import
   state.modalPots = new $bootstrap.Modal('#modalPots', {})
   selectedPot.value = pot
-  modal.value.variant = 'addMoney'
+  modal.value.type = 'addMoney'
   modal.value.title = `Add to '${pot.name}'`
   modal.value.buttonLabel = 'Confirm Addition'
   modal.value.backLink = ''
-  modal.value.subline =
+  modal.value.subLine =
     'Add money to your pot to keep it separate from your main balance. As soon as you add this money, it will be deducted from your current balance.'
   state.modalPots!.show()
 }
 
 function openWithdrawMoneyModal(pot: Pot): void {
+  // @ts-expect-error bootstrap import
   state.modalPots = new $bootstrap.Modal('#modalPots', {})
   selectedPot.value = pot
-  modal.value.variant = 'withdrawMoney'
+  modal.value.type = 'withdrawMoney'
   modal.value.title = `Withdraw from '${pot.name}'`
   modal.value.buttonLabel = 'Confirm Withdrawal'
   modal.value.backLink = ''
-  modal.value.subline =
+  modal.value.subLine =
     'Withdraw from your pot to put money back in your main balance. This will reduce the amount you have in this pot.'
   state.modalPots!.show()
 }
 
-function handleButtonClick(): void {
-  if (modal.value.variant === 'delete') {
-    store.delete(selectedPot.value!)
-    state.modalPots!.hide()
-  }
+function closeModal(): void {
+  inputStore1.clear()
+  inputStore2.clear()
+  state.modalPots!.hide()
 }
 </script>

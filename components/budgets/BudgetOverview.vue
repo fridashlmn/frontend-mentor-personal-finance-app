@@ -52,10 +52,10 @@ interface Props {
 }
 
 const props = defineProps<Props>()
-const today = globalToday.getDate()
-const thisMonth = globalToday.getMonth()
+const today: number = globalToday.getDate()
+const thisMonth: number = globalToday.getMonth()
 
-const totalBudget = computed(() => {
+const totalBudget = computed<number>(() => {
   return props.budgets
     .map((budget) => budget.maximum)
     .reduce((accumulator, currentValue) => {
@@ -63,7 +63,7 @@ const totalBudget = computed(() => {
     }, 0)
 })
 
-const currentTransactions = computed(() => {
+const currentTransactions = computed<Transaction[]>(() => {
   return props.transactions.filter(
     (transaction) =>
       new Date(transaction.date).getDate() < today &&

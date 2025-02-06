@@ -25,7 +25,7 @@ interface Props {
 const props = defineProps<Props>()
 const today: number = globalToday.getDate()
 
-const paidBillsAmount = computed(() => {
+const paidBillsAmount = computed<string>(() => {
   const paidBills = props.transactions.filter(
     (transaction) => new Date(transaction.date).getDate() < globalToday,
   )
@@ -38,7 +38,7 @@ const paidBillsAmount = computed(() => {
   )
 })
 
-const totalUpcoming = computed(() => {
+const totalUpcoming = computed<string>(() => {
   const unpaidBills = props.transactions.filter(
     (transaction) => new Date(transaction.date).getDate() > today,
   )
@@ -51,7 +51,7 @@ const totalUpcoming = computed(() => {
   )
 })
 
-const dueSoon = computed(() => {
+const dueSoon = computed<string>(() => {
   const unpaidBillsDueInSevenDays = props.transactions.filter(
     (transaction) =>
       new Date(transaction.date).getDate() > today &&

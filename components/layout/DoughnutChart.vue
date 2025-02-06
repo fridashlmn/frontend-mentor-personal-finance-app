@@ -12,6 +12,7 @@ import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js'
 import { Doughnut } from 'vue-chartjs'
 import type { DoughnutChartData } from '~/@types/types'
 import { toCurrency } from '~/utils/formatter'
+
 ChartJS.register(ArcElement, Tooltip, Legend)
 
 interface Props {
@@ -19,6 +20,7 @@ interface Props {
 }
 
 defineProps<Props>()
+
 const options = {
   responsive: true,
   maintainAspectRatio: false,

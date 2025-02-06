@@ -7,7 +7,7 @@
         edit-label="Edit Budget"
         delete-label="Delete Budget"
         @edit="$emit('edit')"
-        @delete="$emit('delete', budget.category)"
+        @delete="$emit('delete', budget)"
       />
     </template>
     <template #content>
@@ -92,7 +92,7 @@ interface Props {
 }
 const props = defineProps<Props>()
 
-const amountSpent = computed(() => {
+const amountSpent = computed<number>(() => {
   return props.transactions
     .map((transaction) => transaction.amount)
     .reduce((accumulator, currentValue) => {
@@ -100,7 +100,7 @@ const amountSpent = computed(() => {
     }, 0)
 })
 
-const percent = computed(() => {
+const percent = computed<string>(() => {
   return ((amountSpent.value / props.budget.maximum) * 100).toFixed(1)
 })
 </script>

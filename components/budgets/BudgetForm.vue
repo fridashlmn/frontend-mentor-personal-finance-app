@@ -1,28 +1,36 @@
 <template>
-  <form @submit.prevent="handleSubmit">
+  <FormContainer
+    :button-label="buttonLabel"
+    :button-variant="buttonVariant"
+    @handle-submit="handleSubmit"
+  >
     <template v-if="type === 'edit' || type === 'add'">
       <SelectDropdown
-        :select-items="selectCategories"
-        label="Budget Category"
         class="mb-4"
+        title="Budget Category"
         dropdown-direction="dropdown-center"
-        @select="(s) => (selectedCategory = s.label)"
-      />
+        :select-items="selectOptionsCategories"
+        @select="(s) => (selectedCategory = s.category)"
+      >
+        <template #dropdownItemSuffix>
+          <span class="fs-5 colorGrey-500 nowrap">Already used</span>
+        </template>
+      </SelectDropdown>
       <InputField
-        placeholder="e.g. 2000"
-        type="text"
+        :store-i-d="1"
         label="Maximum Spend"
-        class="mb-4"
+        placeholder="e.g. 2000"
+        type="number"
         :prefix="true"
+        class="mb-4"
       >
         <template #prefix>$</template>
       </InputField>
       <SelectDropdown
-        :select-items="selectItemsBudgetColors"
-        label="Theme"
+        title="Theme"
         dropdown-direction="dropdown-center"
-        :themed="true"
-        @select="(s) => (selectedBudgetColor = s.theme)"
+        :select-items="selectOptionsColors"
+        @select="(s) => (selectedColor = s.theme)"
       >
         <template #dropdownButtonPrefix="dropdownButtonPrefixProps">
           <span
@@ -41,61 +49,67 @@
         </template>
       </SelectDropdown>
     </template>
-    <button
-      type="submit"
-      class="btn modalButton w-100 mt-5"
-      :class="buttonVariant"
-    >
-      {{ buttonLabel }}
-    </button>
-  </form>
+  </FormContainer>
 </template>
 <script setup lang="ts">
 import InputField from '~/components/layout/InputField.vue'
 import SelectDropdown from '~/components/layout/SelectDropdown.vue'
 import { selectCategories, selectColors } from '~/content/selects'
-import type { Budget } from '~/@types/types'
+import type { Budget, SelectItem } from '~/@types/types'
 import { computed, ref } from 'vue'
 import { useBudgetsStore } from '~/stores/budgets'
 import { useInputStore } from '~/stores/input'
-
-const budgetStore = useBudgetsStore()
-const inputStore = useInputStore()
+import FormContainer from '~/components/layout/FormContainer.vue'
+import { findUsedProperties } from '~/utils/array'
 
 interface Props {
   budgets: Budget[]
   buttonVariant: string
   buttonLabel: string
   type: string
-  selectedBudgetCategory?: string
+  selectedBudget?: Budget
 }
 const props = defineProps<Props>()
 const emit = defineEmits(['close'])
+const budgetStore = useBudgetsStore()
+const inputStore1 = useInputStore(1)
 
-const selectItemsBudgetColors = computed(() => {
-  for (let i = 0; i < props.budgets.length; i++) {
-    for (let j = 0; j < selectColors.length; j++) {
-      if (props.budgets[i].theme === selectColors[j].theme) {
-        selectColors[j].disabled = true
-      }
-    }
-  }
-  return selectColors.sort((a, b) => a.disabled - b.disabled)
+const selectOptionsCategories = computed<SelectItem[]>(() => {
+  return findUsedProperties(
+    props.budgets as [],
+    selectCategories as [],
+    'category',
+    'label',
+  )
 })
 
-const selectedCategory = ref<string>(selectCategories[0].label)
-const selectedBudgetColor = ref(selectItemsBudgetColors.value[0].theme)
+const selectOptionsColors = computed<SelectItem[]>(() => {
+  return findUsedProperties(
+    props.budgets as [],
+    selectColors as [],
+    'theme',
+    'theme',
+  )
+})
+
+const selectedCategory = ref<string>(selectOptionsCategories.value[0].label)
+const selectedColor = ref<string>(selectOptionsColors.value[0].theme)
 
 function handleSubmit(): void {
   if (props.type === 'delete') {
-    budgetStore.delete(props.selectedBudgetCategory)
+    budgetStore.delete(props.selectedBudget!)
   }
   if (props.type === 'add') {
-    budgetStore.add(
-      selectedCategory.value,
-      Number(inputStore.inputValue),
-      selectedBudgetColor.value,
-    )
+    if (!inputStore1.inputValue) {
+      inputStore1.error = 'Cannot be empty'
+      return
+    }
+    const newBudget: Budget = {
+      category: selectedCategory.value,
+      maximum: Number(inputStore1.inputValue),
+      theme: selectedColor.value || '',
+    }
+    budgetStore.add(newBudget)
   }
   emit('close')
 }

@@ -50,3 +50,10 @@ export interface SortOption {
   direction: string
   sortBy: string
 }
+
+export type SelectItem = {
+  id: number
+  label: string
+  disabled: boolean
+  theme?: string
+}

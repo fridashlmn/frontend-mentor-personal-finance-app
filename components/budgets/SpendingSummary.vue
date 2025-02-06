@@ -62,7 +62,7 @@ interface Props {
 }
 const props = defineProps<Props>()
 
-const totalBudget = computed(() => {
+const totalBudget = computed<number>(() => {
   return props.budgets
     .map((budget) => Number(budget.maximum))
     .reduce((accumulator, currentValue) => {
@@ -70,7 +70,7 @@ const totalBudget = computed(() => {
     }, 0)
 })
 
-const totalAmountSpent = computed(() => {
+const totalAmountSpent = computed<number>(() => {
   return amountSpentByCategory.value.reduce((accumulator, currentValue) => {
     return accumulator + currentValue
   }, 0)

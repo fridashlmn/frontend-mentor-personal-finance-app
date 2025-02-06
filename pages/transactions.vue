@@ -7,10 +7,11 @@
       <div class="table bg-white rounded-3 p-7 mt-5 mt-md-7">
         <nav class="navbar row p-0 justify-content-between">
           <InputField
-            class="col col-md-3 col-lg-4"
+            :store-i-d="1"
             placeholder="Search transaction"
             type="search"
             :icon="IconSearch"
+            class="col col-md-3 col-lg-4"
           />
           <div
             class="col col-md-9 col-lg-8 d-flex justify-content-end align-items-center"

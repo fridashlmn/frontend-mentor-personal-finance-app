@@ -17,13 +17,14 @@
           <div class="table bg-white rounded-3 p-7">
             <nav class="navbar row p-0 justify-content-between">
               <InputField
-                class="col col-md-3 col-lg-4"
+                :store-i-d="1"
                 placeholder="Search bills"
                 type="search"
                 :icon="IconSearch"
+                class="col col-md-4 col-lg-4"
               />
               <SelectDropdown
-                class="col col-md-9 col-lg-8 d-flex justify-content-end align-items-center"
+                class="col col-md-4 col-lg-4 d-flex justify-content-end align-items-center"
                 :select-items="filterItems"
                 helper-message="Sort by"
                 @select="sortTransactions"

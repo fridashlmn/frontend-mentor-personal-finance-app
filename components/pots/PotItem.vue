@@ -63,7 +63,7 @@ interface Props {
 }
 const props = defineProps<Props>()
 
-const percent = computed(() => {
+const percent = computed<string>(() => {
   return ((props.pot.total / props.pot.target) * 100).toFixed(1)
 })
 </script>

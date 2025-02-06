@@ -32,8 +32,6 @@ import IconCaretRight from '~/assets/images/icon-caret-right.svg?component'
 import IconCaretLeft from '~/assets/images/icon-caret-left.svg?component'
 import { ref } from 'vue'
 import { VueAwesomePaginate } from 'vue-awesome-paginate'
-// eslint-disable-next-line no-undef
-const viewport = useViewport()
 
 interface Props {
   totalItems: number
@@ -41,8 +39,10 @@ interface Props {
   maxPagesShown: number
 }
 defineProps<Props>()
+// eslint-disable-next-line no-undef
+const viewport = useViewport()
 
-const currentPage = ref(1)
+const currentPage = ref<number>(1)
 const displayCurrentPage = defineModel()
 
 const onClickHandler = (page: number) => {
@@ -50,7 +50,8 @@ const onClickHandler = (page: number) => {
   displayCurrentPage.value = page
   scrollToTop()
 }
-const scrollToTop = () => {
+
+function scrollToTop(): void {
   window.scrollTo({ top: 0, behavior: 'smooth' })
 }
 </script>

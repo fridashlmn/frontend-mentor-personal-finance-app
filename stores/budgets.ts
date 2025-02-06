@@ -11,18 +11,20 @@ export const useBudgetsStore = defineStore('budgets', {
     }
   },
   actions: {
-    delete(category: string) {
-      this.budgets = this.budgets.filter((b: Budget) => b.category !== category)
+    delete(budget: Budget) {
+      this.budgets = this.budgets.filter(
+        (b: Budget) => b.category !== budget.category,
+      )
       localStorage.setItem('budgets', JSON.stringify(this.budgets))
     },
-    add(category: string, maximum: number, theme: string) {
+    add(budget: Budget) {
       const existingEntries = JSON.parse(
         localStorage.getItem('budgets') || '[]',
       )
       existingEntries.push({
-        category: category,
-        maximum: maximum,
-        theme: theme,
+        category: budget.category,
+        maximum: budget.maximum,
+        theme: budget.theme,
       })
       this.budgets = existingEntries
       localStorage.setItem('budgets', JSON.stringify(this.budgets))

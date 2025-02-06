@@ -62,7 +62,7 @@ interface Props {
 }
 const props = defineProps<Props>()
 
-const recurringBillsTotalAmount = computed(() => {
+const recurringBillsTotalAmount = computed<string>(() => {
   return toCurrency(
     props.recurringBills
       .map((bill) => bill.amount)
@@ -72,7 +72,7 @@ const recurringBillsTotalAmount = computed(() => {
   )
 })
 
-const paidBillsTotalAmount = computed(() => {
+const paidBillsTotalAmount = computed<string>(() => {
   return toCurrency(
     props.paidBills
       .map((bill) => bill.amount)
@@ -82,7 +82,7 @@ const paidBillsTotalAmount = computed(() => {
   )
 })
 
-const totalUpcomingTotalAmount = computed(() => {
+const totalUpcomingTotalAmount = computed<string>(() => {
   return toCurrency(
     props.totalUpcoming
       .map((bill) => bill.amount)
@@ -92,7 +92,7 @@ const totalUpcomingTotalAmount = computed(() => {
   )
 })
 
-const dueSoonTotalAmount = computed(() => {
+const dueSoonTotalAmount = computed<string>(() => {
   return toCurrency(
     props.dueSoon
       .map((bill) => bill.amount)

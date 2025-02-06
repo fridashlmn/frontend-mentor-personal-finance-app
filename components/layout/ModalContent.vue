@@ -10,7 +10,7 @@
         </NuxtLink>
       </div>
       <span class="fs-4 colorGrey-500 my-5 align-self-baseline">
-        {{ subline }}
+        {{ subLine }}
       </span>
     </div>
     <div class="modal-body">
@@ -32,7 +32,7 @@ import IconCloseModal from '~/assets/images/icon-close-modal.svg?component'
 
 interface Props {
   title: string
-  subline: string
+  subLine: string
   backLink?: string
 }
 defineProps<Props>()

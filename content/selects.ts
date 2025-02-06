@@ -1,19 +1,19 @@
-import type { SortOption } from '~/@types/types'
+import type { SelectItem, SortOption } from '~/@types/types'
 
-export const selectCategories = [
-  { id: 2, label: 'Entertainment' },
-  { id: 3, label: 'Bills' },
-  { id: 4, label: 'Groceries' },
-  { id: 5, label: 'Dining Out' },
-  { id: 6, label: 'Transportation' },
-  { id: 7, label: 'Personal Care' },
-  { id: 8, label: 'Education' },
-  { id: 9, label: 'Lifecycle' },
-  { id: 10, label: 'Shopping' },
-  { id: 11, label: 'General' },
+export const selectCategories: SelectItem[] = [
+  { id: 2, label: 'Entertainment', disabled: false },
+  { id: 3, label: 'Bills', disabled: false },
+  { id: 4, label: 'Groceries', disabled: false },
+  { id: 5, label: 'Dining Out', disabled: false },
+  { id: 6, label: 'Transportation', disabled: false },
+  { id: 7, label: 'Personal Care', disabled: false },
+  { id: 8, label: 'Education', disabled: false },
+  { id: 9, label: 'Lifecycle', disabled: false },
+  { id: 10, label: 'Shopping', disabled: false },
+  { id: 11, label: 'General', disabled: false },
 ]
-export const selectCategoriesWithAll: { id: number; label: string }[] = [
-  { id: 1, label: 'All Transactions' },
+export const selectCategoriesWithAll: SelectItem[] = [
+  { id: 1, label: 'All Transactions', disabled: false },
   ...selectCategories,
 ]
 

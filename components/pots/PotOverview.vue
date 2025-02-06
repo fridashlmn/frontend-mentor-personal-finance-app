@@ -33,7 +33,7 @@ interface Props {
 
 const props = defineProps<Props>()
 
-const totalAmountSaved = computed(() => {
+const totalAmountSaved = computed<string>(() => {
   const totalAmount = props.pots
     .map((pot) => pot.total)
     .reduce((accumulator, currentValue) => {
@@ -42,7 +42,7 @@ const totalAmountSaved = computed(() => {
   return toCurrency(totalAmount, 'short')
 })
 
-const legendData = computed(() => {
+const legendData = computed<Legend[]>(() => {
   const array: Legend[] = []
   for (let i = 0; i < props.pots.length; i++) {
     array.push({
