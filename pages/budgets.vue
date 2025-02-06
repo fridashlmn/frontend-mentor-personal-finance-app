@@ -21,7 +21,7 @@
               class="mb-6"
               :budget="budget"
               :transactions="getCurrentTransactionsByCategory(budget.category)"
-              @edit="openEditBudgetModal"
+              @edit="openEditBudgetModal(budget)"
               @delete="openDeleteBudgetModal(budget)"
             />
           </div>
@@ -43,13 +43,29 @@
                 :back-link="modal.backLink"
                 @close="closeModal"
               >
-                <BudgetForm
+                <BudgetAddForm
+                  v-if="modal.type === 'add' && selectedBudget"
                   :budgets="budgets"
                   :type="modal.type"
                   :selected-budget="selectedBudget"
                   :button-label="modal.buttonLabel"
                   :button-variant="modal.buttonVariant"
                   @close="closeModal"
+                />
+                <BudgetEditForm
+                  v-if="modal.type === 'edit' && selectedBudget"
+                  :budgets="budgets"
+                  :type="modal.type"
+                  :selected-budget="selectedBudget"
+                  :button-label="modal.buttonLabel"
+                  :button-variant="modal.buttonVariant"
+                  @close="closeModal"
+                />
+                <FormContainer
+                  v-if="modal.type === 'delete'"
+                  :button-label="modal.buttonLabel"
+                  :button-variant="modal.buttonVariant"
+                  @handle-submit="deleteBudget"
                 />
               </ModalContent>
             </div>
@@ -67,11 +83,13 @@ import SpendingSummary from '~/components/budgets/SpendingSummary.vue'
 import CategoryItem from '~/components/budgets/CategoryItem.vue'
 import type { Budget, Transaction } from '~/@types/types'
 import ModalContent from '~/components/layout/ModalContent.vue'
-import BudgetForm from '~/components/budgets/BudgetForm.vue'
+import BudgetAddForm from '~/components/budgets/BudgetAddForm.vue'
 import { useBudgetsStore } from '~/stores/budgets'
 import { useTransactionsStore } from '~/stores/transactions'
 import { storeToRefs } from 'pinia'
 import { useInputStore } from '~/stores/input'
+import BudgetEditForm from '~/components/budgets/BudgetEditForm.vue'
+import FormContainer from '~/components/layout/FormContainer.vue'
 
 const budgetStore = useBudgetsStore()
 const { budgets } = storeToRefs(budgetStore)
@@ -83,6 +101,7 @@ const inputStore = useInputStore(1)
 const { $bootstrap } = useNuxtApp()
 const today = globalToday.getDate()
 const thisMonth = globalToday.getMonth()
+
 const modal = ref({
   type: '',
   title: '',
@@ -123,7 +142,8 @@ function openAddBudgetModal(): void {
   state.modalBudgets!.show()
 }
 
-function openEditBudgetModal(): void {
+function openEditBudgetModal(budget: Budget): void {
+  selectedBudget.value = budget
   // @ts-expect-error bootstrap import
   state.modalBudgets = new $bootstrap.Modal('#modalBudgets', {})
   modal.value.type = 'edit'
@@ -148,8 +168,14 @@ function openDeleteBudgetModal(budget: Budget): void {
   state.modalBudgets!.show()
 }
 
+function deleteBudget(): void {
+  budgetStore.delete(selectedBudget.value!)
+  closeModal()
+}
+
 function closeModal(): void {
   inputStore.clear()
+  modal.value.type = ''
   state.modalBudgets!.hide()
 }
 </script>

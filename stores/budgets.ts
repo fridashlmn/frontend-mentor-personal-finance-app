@@ -26,8 +26,14 @@ export const useBudgetsStore = defineStore('budgets', {
         maximum: budget.maximum,
         theme: budget.theme,
       })
-      this.budgets = existingEntries
+      this.budgets = existingEntries.sort((a: Budget, b: Budget) =>
+        a.category.localeCompare(b.category),
+      )
       localStorage.setItem('budgets', JSON.stringify(this.budgets))
+    },
+    edit(oldBudget: Budget, newBudget: Budget) {
+      this.delete(oldBudget)
+      this.add(newBudget)
     },
   },
 })
