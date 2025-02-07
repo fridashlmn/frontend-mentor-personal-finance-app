@@ -4,9 +4,7 @@
       <ThemeCardHeader
         :theme="budget.theme"
         :title="budget.category"
-        edit-label="Edit Budget"
         delete-label="Delete Budget"
-        @edit="$emit('edit')"
         @delete="$emit('delete', budget)"
       />
     </template>

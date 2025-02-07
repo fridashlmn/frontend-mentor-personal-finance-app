@@ -100,13 +100,18 @@ import SelectDropdown from '~/components/layout/SelectDropdown.vue'
 import InputField from '~/components/layout/InputField.vue'
 import IconSearch from '~/assets/images/icon-search.svg?component'
 import { formatDate, toCurrency } from '~/utils/formatter'
-import type { SortOption } from '~/@types/types'
-import { ref, computed } from 'vue'
+import type { SortOption, Transaction } from '~/@types/types'
+import { ref, computed, watch } from 'vue'
 import Pagination from '~/components/layout/Pagination.vue'
 import { selectCategoriesWithAll, selectSorting } from '~/content/selects'
 import { useTransactionsStore } from '~/stores/transactions'
+import { useInputStore } from '~/stores/input'
+import { storeToRefs } from 'pinia'
 
 const transactionsStore = useTransactionsStore()
+const inputStore = useInputStore(1)
+const { inputValue } = storeToRefs(inputStore)
+
 // eslint-disable-next-line no-undef
 const viewport = useViewport()
 const displayCurrentPage = ref(1)
@@ -123,9 +128,15 @@ const tableHead: string[] = [
 const displayedPosts = computed(() => {
   const startIndex = (displayCurrentPage.value - 1) * itemsPerPage
   const endIndex = startIndex + itemsPerPage
-  return Array.isArray(sortedTransactions.value)
+  const sorted = Array.isArray(sortedTransactions.value)
     ? sortedTransactions.value.slice(startIndex, endIndex)
     : []
+  if (inputValue) {
+    return sorted.filter((transaction: Transaction) =>
+      transaction.name.toLowerCase().includes(inputValue.value.toLowerCase()),
+    )
+  }
+  return sorted
 })
 
 function filterTransactions(selectedItem: { id: number; label: string }) {

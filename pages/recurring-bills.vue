@@ -31,7 +31,7 @@
               />
             </nav>
             <DataTable class="mt-6" :table-head="tableHead">
-              <tr v-for="(item, index) in sortedItems" :key="index">
+              <tr v-for="(item, index) in displayedItems" :key="index">
                 <td class="fw-bold fs-4 align-md-middle align-bottom">
                   <img
                     :src="item.avatar"
@@ -73,18 +73,22 @@ import SelectDropdown from '~/components/layout/SelectDropdown.vue'
 import IconSearch from '~/assets/images/icon-search.svg?component'
 import IconDue from '~/assets/images/icon-bill-due.svg?component'
 import IconPaid from '~/assets/images/icon-bill-paid.svg?component'
-import { ref, markRaw } from 'vue'
+import { ref, markRaw, computed } from 'vue'
 import DataTable from '~/components/layout/DataTable.vue'
 import { formatDay, toCurrency } from '~/utils/formatter'
 import Container from '~/components/layout/Container.vue'
 import RecurringBillsSummary from '~/components/recurringBills/RecurringBillsSummary.vue'
 import { globalToday } from '~/content/date'
-import type { SortOption } from '~/@types/types'
+import type { SortOption, Transaction } from '~/@types/types'
 import { useTransactionsStore } from '~/stores/transactions'
+import { useInputStore } from '~/stores/input'
+import { storeToRefs } from 'pinia'
 
 // eslint-disable-next-line no-undef
 const viewport = useViewport()
 const transactionsStore = useTransactionsStore()
+const inputStore = useInputStore(1)
+const { inputValue } = storeToRefs(inputStore)
 
 const filterItems: SortOption[] = [
   { id: 1, label: 'Latest', direction: 'asc', sortBy: 'date' },
@@ -124,6 +128,15 @@ const totalUpcoming = recurringBills
   .map((obj) => ({ ...obj, theme: 'grey-500' }))
 
 const sortedItems = ref([...paidBills, ...dueSoon, ...totalUpcoming])
+
+const displayedItems = computed(() => {
+  if (inputValue) {
+    return sortedItems.value.filter((transaction: Transaction) =>
+      transaction.name.toLowerCase().includes(inputValue.value.toLowerCase()),
+    )
+  }
+  return sortedItems
+})
 
 function sortTransactions(selectedItem: SortOption): void {
   if (selectedItem.sortBy === 'date') {

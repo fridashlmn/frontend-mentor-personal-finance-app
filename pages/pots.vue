@@ -13,7 +13,6 @@
             <PotItem
               class="mb-6"
               :pot="pot"
-              @edit="openEditPotModal"
               @delete="openDeletePotModal"
               @add-money="openAddMoneyModal"
               @withdraw-money="openWithdrawMoneyModal"
@@ -33,6 +32,15 @@
               :back-link="modal.backLink"
               @close="closeModal"
             >
+              <PotAddForm
+                v-if="modal.type === 'add' && selectedPot"
+                :pots="pots"
+                :type="modal.type"
+                :button-label="modal.buttonLabel"
+                :button-variant="modal.buttonVariant"
+                :selected-pot="selectedPot"
+                @close="closeModal"
+              />
               <AddWithdrawForm
                 v-if="
                   (modal.type === 'addMoney' ||
@@ -45,14 +53,12 @@
                 :button-variant="modal.buttonVariant"
                 @close="closeModal"
               />
-              <PotForm
-                v-else
-                :pots="pots"
-                :type="modal.type"
+
+              <FormContainer
+                v-if="modal.type === 'delete'"
                 :button-label="modal.buttonLabel"
                 :button-variant="modal.buttonVariant"
-                :selected-pot="selectedPot"
-                @close="closeModal"
+                @handle-submit="deletePot"
               />
             </ModalContent>
           </div>
@@ -66,11 +72,12 @@ import PotItem from '~/components/pots/PotItem.vue'
 import Container from '~/components/layout/Container.vue'
 import ModalContent from '~/components/layout/ModalContent.vue'
 import { reactive, ref, computed } from 'vue'
-import PotForm from '~/components/pots/PotForm.vue'
+import PotAddForm from '~/components/pots/PotAddForm.vue'
 import AddWithdrawForm from '~/components/pots/AddWithdrawForm.vue'
 import type { Pot } from '~/@types/types'
 import { usePotsStore } from '@/stores/pots'
 import { useInputStore } from '~/stores/input'
+import FormContainer from '~/components/layout/FormContainer.vue'
 
 const potStore = usePotsStore()
 const pots = computed(() => potStore.pots)
@@ -101,18 +108,6 @@ function openAddPotModal(): void {
   modal.value.backLink = ''
   modal.value.subLine =
     'Create a pot to set savings targets. These can help keep you on track as you save for special purchases.'
-  state.modalPots!.show()
-}
-
-function openEditPotModal(): void {
-  // @ts-expect-error bootstrap import
-  state.modalPots = new $bootstrap.Modal('#modalPots', {})
-  modal.value.type = 'edit'
-  modal.value.title = 'Edit Pot'
-  modal.value.buttonLabel = 'Save Changes'
-  modal.value.backLink = ''
-  modal.value.subLine =
-    'If your saving targets change, feel free to update your pots.'
   state.modalPots!.show()
 }
 
@@ -160,5 +155,9 @@ function closeModal(): void {
   inputStore1.clear()
   inputStore2.clear()
   state.modalPots!.hide()
+}
+
+function deletePot() {
+  potStore.delete(selectedPot.value!)
 }
 </script>

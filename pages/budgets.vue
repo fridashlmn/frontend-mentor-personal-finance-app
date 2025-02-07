@@ -21,7 +21,6 @@
               class="mb-6"
               :budget="budget"
               :transactions="getCurrentTransactionsByCategory(budget.category)"
-              @edit="openEditBudgetModal(budget)"
               @delete="openDeleteBudgetModal(budget)"
             />
           </div>
@@ -45,15 +44,6 @@
               >
                 <BudgetAddForm
                   v-if="modal.type === 'add' && selectedBudget"
-                  :budgets="budgets"
-                  :type="modal.type"
-                  :selected-budget="selectedBudget"
-                  :button-label="modal.buttonLabel"
-                  :button-variant="modal.buttonVariant"
-                  @close="closeModal"
-                />
-                <BudgetEditForm
-                  v-if="modal.type === 'edit' && selectedBudget"
                   :budgets="budgets"
                   :type="modal.type"
                   :selected-budget="selectedBudget"
@@ -88,7 +78,6 @@ import { useBudgetsStore } from '~/stores/budgets'
 import { useTransactionsStore } from '~/stores/transactions'
 import { storeToRefs } from 'pinia'
 import { useInputStore } from '~/stores/input'
-import BudgetEditForm from '~/components/budgets/BudgetEditForm.vue'
 import FormContainer from '~/components/layout/FormContainer.vue'
 
 const budgetStore = useBudgetsStore()
@@ -139,18 +128,6 @@ function openAddBudgetModal(): void {
   modal.value.buttonLabel = 'Add Budget'
   modal.value.subLine =
     'Choose a category to set a spending budget. These categories can help you monitor spending.'
-  state.modalBudgets!.show()
-}
-
-function openEditBudgetModal(budget: Budget): void {
-  selectedBudget.value = budget
-  // @ts-expect-error bootstrap import
-  state.modalBudgets = new $bootstrap.Modal('#modalBudgets', {})
-  modal.value.type = 'edit'
-  modal.value.title = 'Edit Budget'
-  modal.value.buttonLabel = 'Save Changes'
-  modal.value.subLine =
-    'As your budgets change, feel free to update your spending limits.'
   state.modalBudgets!.show()
 }
 

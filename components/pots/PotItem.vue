@@ -4,9 +4,7 @@
       <ThemeCardHeader
         :title="pot.name"
         :theme="pot.theme"
-        edit-label="Edit Pot"
         delete-label="Delete Pot"
-        @edit="$emit('edit')"
         @delete="$emit('delete', pot)"
       />
     </div>

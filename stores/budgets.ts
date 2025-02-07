@@ -31,9 +31,5 @@ export const useBudgetsStore = defineStore('budgets', {
       )
       localStorage.setItem('budgets', JSON.stringify(this.budgets))
     },
-    edit(oldBudget: Budget, newBudget: Budget) {
-      this.delete(oldBudget)
-      this.add(newBudget)
-    },
   },
 })
