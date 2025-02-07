@@ -33,7 +33,7 @@
               @close="closeModal"
             >
               <PotAddForm
-                v-if="modal.type === 'add' && selectedPot"
+                v-if="modal.type === 'add'"
                 :pots="pots"
                 :type="modal.type"
                 :button-label="modal.buttonLabel"

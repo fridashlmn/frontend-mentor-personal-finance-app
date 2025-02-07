@@ -43,7 +43,7 @@
                 @close="closeModal"
               >
                 <BudgetAddForm
-                  v-if="modal.type === 'add' && selectedBudget"
+                  v-if="modal.type === 'add'"
                   :budgets="budgets"
                   :type="modal.type"
                   :selected-budget="selectedBudget"
