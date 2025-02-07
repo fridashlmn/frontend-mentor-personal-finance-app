@@ -13,14 +13,14 @@
 <script setup lang="ts">
 import NavBarDesktop from '~/components/layout/NavBarDesktop.vue'
 import NavBarMobile from '~/components/layout/NavBarMobile.vue'
-import { onMounted } from 'vue'
+import { onBeforeMount } from 'vue'
 import data from '~/content/data.json'
 import type { Budget, Pot } from '~/@types/types'
 
 // eslint-disable-next-line no-undef
 const viewport = useViewport()
 
-onMounted(() => {
+onBeforeMount(() => {
   // eslint-disable-next-line no-undef
   if (process.browser) {
     data.budgets.sort((a: Budget, b: Budget) =>
